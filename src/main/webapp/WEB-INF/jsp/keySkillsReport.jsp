@@ -15,6 +15,7 @@
         <br>
         <h4>Vacancy name: ${report.name}</h4>
         <h4>City: ${report.city}</h4>
+        <h4>Selection: First ${report.selection * 50 - 5} vacancies</h4>
         <h4>Processed date: ${report.date}</h4>
         <h4>Number of processed vacancies: ${report.vacanciesAmount}</h4>
         <br>

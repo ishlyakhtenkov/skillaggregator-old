@@ -9,14 +9,16 @@ public class VacancyKeySkillsReportTo {
     private String name;
     private String city;
     private LocalDate date;
+    private int selection;
     private int vacanciesAmount;
     private Map<String, String> keySkills;
 
-    public VacancyKeySkillsReportTo(Integer id, String name, String city, LocalDate date, int vacanciesAmount, Map<String, String> keySkills) {
+    public VacancyKeySkillsReportTo(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, Map<String, String> keySkills) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.date = date;
+        this.selection = selection;
         this.vacanciesAmount = vacanciesAmount;
         this.keySkills = keySkills;
     }
@@ -35,6 +37,10 @@ public class VacancyKeySkillsReportTo {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public int getSelection() {
+        return selection;
     }
 
     public int getVacanciesAmount() {

@@ -26,7 +26,8 @@ public class VacancyKeySkillsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String city = req.getParameter("city");
-        VacancyKeySkillsReport report = service.getReportToday(name, city);
+        int selection = Integer.parseInt(req.getParameter("selection"));
+        VacancyKeySkillsReport report = service.getReportToday(name, city, selection);
         req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report));
         req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
     }

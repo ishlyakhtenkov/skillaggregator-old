@@ -12,5 +12,5 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface VacancyKeySkillsReportRepository extends JpaRepository<VacancyKeySkillsReport, Integer> {
 
-    Optional<VacancyKeySkillsReport> findByNameAndCityAndDate(String name, String city, LocalDate date);
+    Optional<VacancyKeySkillsReport> findByNameAndCityAndDateAndSelection(String name, String city, LocalDate date, int selection);
 }

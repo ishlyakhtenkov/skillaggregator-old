@@ -18,12 +18,12 @@ public class VacancyKeySkillsReport extends VacancyReport {
     public VacancyKeySkillsReport() {
     }
 
-    public VacancyKeySkillsReport(String name, String city, int vacanciesAmount, String keySkills) {
-        this(null, name, city, LocalDate.now(), vacanciesAmount, keySkills);
+    public VacancyKeySkillsReport(String name, String city, int selection, int vacanciesAmount, String keySkills) {
+        this(null, name, city, LocalDate.now(), selection, vacanciesAmount, keySkills);
     }
 
-    public VacancyKeySkillsReport(Integer id, String name, String city, LocalDate date, int vacanciesAmount, String keySkills) {
-        super(id, name, city, date);
+    public VacancyKeySkillsReport(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, String keySkills) {
+        super(id, name, city, date, selection);
         this.vacanciesAmount = vacanciesAmount;
         this.keySkills = keySkills;
     }

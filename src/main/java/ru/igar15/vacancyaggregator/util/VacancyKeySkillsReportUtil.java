@@ -20,6 +20,6 @@ public class VacancyKeySkillsReportUtil {
             String[] tempSplit = temp.split("=%=");
             keySkillsMap.put(tempSplit[0], tempSplit[1]);
         }
-        return new VacancyKeySkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getVacanciesAmount(), keySkillsMap);
+        return new VacancyKeySkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), keySkillsMap);
     }
 }

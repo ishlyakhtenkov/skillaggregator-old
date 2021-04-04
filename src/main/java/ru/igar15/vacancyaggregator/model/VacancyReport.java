@@ -24,14 +24,18 @@ public abstract class VacancyReport {
     @Column(name = "date")
     protected LocalDate date = LocalDate.now();
 
+    @Column(name = "selection")
+    protected int selection = 2;
+
     public VacancyReport() {
     }
 
-    public VacancyReport(Integer id, String name, String city, LocalDate date) {
+    public VacancyReport(Integer id, String name, String city, LocalDate date, int selection) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.date = date;
+        this.selection = selection;
     }
 
     public Integer getId() {
@@ -64,6 +68,14 @@ public abstract class VacancyReport {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public int getSelection() {
+        return selection;
+    }
+
+    public void setSelection(int selection) {
+        this.selection = selection;
     }
 
     @Override

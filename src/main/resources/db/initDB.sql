@@ -10,6 +10,7 @@ CREATE TABLE vacancy_key_skills_reports
     city VARCHAR NOT NULL,
     vacancies_amount INTEGER NOT NULL,
     key_skills VARCHAR NOT NULL,
-    date DATE DEFAULT now() NOT NULL
+    date DATE DEFAULT now() NOT NULL,
+    selection INTEGER NOT NULL
 );
-CREATE UNIQUE INDEX vacancy_key_skills_reports_unique_name_city_date_idx ON vacancy_key_skills_reports (name, city, date);
+CREATE UNIQUE INDEX vacancy_key_skills_reports_unique_name_city_date_selection_idx ON vacancy_key_skills_reports (name, city, date, selection);

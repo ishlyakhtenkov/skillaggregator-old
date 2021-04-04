@@ -19,23 +19,35 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator {
     }
 
     @Override
-    public VacancyKeySkillsReport getAggregationResult(String name, String city) throws IOException {
-        KeySkillsStatistic keySkillsStatistic = aggregateKeySkillsStatistic(name, city);
-        return new VacancyKeySkillsReport(name, city, keySkillsStatistic.vacanciesAmount, getKeySkillsStatisticReport(keySkillsStatistic));
+    public VacancyKeySkillsReport getAggregationResult(String name, String city, int selection) throws IOException {
+        KeySkillsStatistic keySkillsStatistic = aggregateKeySkillsStatistic(name, city, selection);
+        return new VacancyKeySkillsReport(name, city, selection, keySkillsStatistic.vacanciesAmount, getKeySkillsStatisticReport(keySkillsStatistic));
     }
 
-    private KeySkillsStatistic aggregateKeySkillsStatistic(String name, String city) throws IOException {
+    private KeySkillsStatistic aggregateKeySkillsStatistic(String name, String city, int selection) throws IOException {
         String hhRuUrl = String.format(HH_RU_URL_SAMPLE, name, city, "%s");
         int vacanciesAmount = 0;
         Properties vacancyProperties = new Properties();
         boolean isVacancyPropertiesExist = checkVacancyProperties(name, vacancyProperties);
         Map<String, Integer> keySkills = new HashMap<>();
 
+        int pageAmount = getPageAmount(hhRuUrl, selection);
         Document vacanciesListPage = null;
-        int pageAmount = getPageAmount(hhRuUrl);
-        for (int i = 0; i < 1; i++) {
-            vacanciesListPage = getDocument(hhRuUrl, i);
-            Elements vacancyElements = vacanciesListPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
+        Elements vacancyElements = null;
+        for (int i = 0; i < pageAmount; i++) {
+            for (int j = 0; j < 10; j++) {
+                vacanciesListPage = getDocument(hhRuUrl, i);
+                vacancyElements = vacanciesListPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
+                if (vacancyElements.size() == 0) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    break;
+                }
+            }
             for (Element vacancyElement : vacancyElements) {
                 vacanciesAmount++;
                 String vacancyUrl = vacancyElement.getElementsByAttributeValueContaining("data-qa", "title").attr("href");
@@ -72,7 +84,7 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator {
                 .get();
     }
 
-    private int getPageAmount(String url) throws IOException {
+    private int getPageAmount(String url, int selection) throws IOException {
         int pageAmount = 0;
         for (int i = 0; i < 3; i++) {
             Document document = Jsoup.connect(String.format(url, 0))
@@ -88,7 +100,7 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator {
                 break;
             }
         }
-        return pageAmount;
+        return Math.min(pageAmount, selection);
     }
 
     private String getKeySkillsStatisticReport(KeySkillsStatistic keySkillsStatistic) {
