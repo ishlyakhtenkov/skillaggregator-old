@@ -3,6 +3,7 @@ package ru.igar15.vacancyaggregator.to;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class VacancyKeySkillsReportTo {
     private Integer id;
@@ -49,5 +50,24 @@ public class VacancyKeySkillsReportTo {
 
     public Map<String, String> getKeySkills() {
         return keySkills;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VacancyKeySkillsReportTo that = (VacancyKeySkillsReportTo) o;
+        return selection == that.selection &&
+                vacanciesAmount == that.vacanciesAmount &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(keySkills, that.keySkills);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, city, date, selection, vacanciesAmount, keySkills);
     }
 }
