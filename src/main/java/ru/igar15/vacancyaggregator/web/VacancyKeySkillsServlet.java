@@ -1,5 +1,7 @@
 package ru.igar15.vacancyaggregator.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
 import ru.igar15.vacancyaggregator.service.VacancyKeySkillsReportService;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class VacancyKeySkillsServlet extends HttpServlet {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private VacancyKeySkillsReportService service;
 
@@ -27,6 +30,7 @@ public class VacancyKeySkillsServlet extends HttpServlet {
         String name = req.getParameter("name");
         String city = req.getParameter("city");
         int selection = Integer.parseInt(req.getParameter("selection"));
+        log.info("get report for vacancy={}, city={}, selection={}", name, city, selection);
         VacancyKeySkillsReport report = service.getReportToday(name, city, selection);
         req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report));
         req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);

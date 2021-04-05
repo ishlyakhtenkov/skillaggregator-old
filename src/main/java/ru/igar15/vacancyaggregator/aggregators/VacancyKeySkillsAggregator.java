@@ -37,7 +37,7 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator {
         for (int i = 0; i < pageAmount; i++) {
             for (int j = 0; j < 10; j++) {
                 vacanciesListPage = getDocument(hhRuUrl, i);
-                vacancyElements = vacanciesListPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy");
+                vacancyElements = vacanciesListPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title");
                 if (vacancyElements.size() == 0) {
                     try {
                         Thread.sleep(500);
@@ -91,9 +91,14 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator {
                     .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
                     .referrer("http://www.google.com")
                     .get();
-            Elements elements = document.getElementsByClass("bloko-button HH-Pager-Control");
-            OptionalInt max = elements.stream()
-                    .mapToInt(element -> Integer.parseInt(element.text()))
+//            Elements elements = document.getElementsByClass("bloko-button HH-Pager-Control");
+            Elements pageNumbersElements = document.getElementById("HH-React-Root")
+                    .getElementsByAttributeValueContaining("href", "/search/vacancy");
+            Element lastPageNumber = pageNumbersElements.get(pageNumbersElements.size() - 2);
+            Elements lastPageNumberElements = lastPageNumber.getElementsByClass("bloko-button");
+
+            OptionalInt max = lastPageNumberElements.stream()
+                    .mapToInt(lastPageNumberElement -> Integer.parseInt(lastPageNumberElement.text()))
                     .max();
              pageAmount = max.orElse(0);
             if (pageAmount > 0) {
