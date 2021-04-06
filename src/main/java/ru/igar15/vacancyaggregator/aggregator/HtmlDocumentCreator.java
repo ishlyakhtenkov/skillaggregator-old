@@ -1,4 +1,4 @@
-package ru.igar15.vacancyaggregator.aggregators;
+package ru.igar15.vacancyaggregator.aggregator;
 
 import org.jsoup.nodes.Document;
 

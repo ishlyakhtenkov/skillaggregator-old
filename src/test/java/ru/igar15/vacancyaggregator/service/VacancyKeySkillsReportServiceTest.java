@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
-import ru.igar15.vacancyaggregator.aggregators.VacancyAggregator;
+import ru.igar15.vacancyaggregator.aggregator.VacancyAggregator;
 import ru.igar15.vacancyaggregator.config.AppConfig;
 import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
 import ru.igar15.vacancyaggregator.repository.VacancyKeySkillsReportRepository;
