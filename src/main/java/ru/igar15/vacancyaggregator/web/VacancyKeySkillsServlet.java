@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class VacancyKeySkillsServlet extends HttpServlet {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -31,8 +32,12 @@ public class VacancyKeySkillsServlet extends HttpServlet {
         String city = req.getParameter("city");
         int selection = Integer.parseInt(req.getParameter("selection"));
         log.info("get report for vacancy={}, city={}, selection={}", name, city, selection);
-        VacancyKeySkillsReport report = service.getReportToday(name, city, selection);
-        req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report));
-        req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
+        Optional<VacancyKeySkillsReport> report = service.getReportToday(name, city, selection);
+        if (report.isPresent()) {
+            req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report.get()));
+            req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);
+        }
     }
 }

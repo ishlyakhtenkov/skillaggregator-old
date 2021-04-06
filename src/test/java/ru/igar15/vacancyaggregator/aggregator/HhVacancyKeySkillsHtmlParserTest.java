@@ -18,11 +18,11 @@ class HhVacancyKeySkillsHtmlParserTest {
     HhVacancyKeySkillsHtmlParserTest() throws IOException {
     }
 
-    @Test
-    void getPagesAmount() {
-        int pagesAmount = htmlParser.getPagesAmount(vacanciesPage);
-        assertEquals(40, pagesAmount);
-    }
+//    @Test
+//    void getPagesAmount() {
+//        int pagesAmount = htmlParser.getPagesAmount(vacanciesPage);
+//        assertEquals(40, pagesAmount);
+//    }
 
     @Test
     void getVacancies() {

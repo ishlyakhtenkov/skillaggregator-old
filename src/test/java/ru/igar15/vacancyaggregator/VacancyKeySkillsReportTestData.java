@@ -8,8 +8,8 @@ public class VacancyKeySkillsReportTestData {
     public static final VacancyKeySkillsReport report = new VacancyKeySkillsReport("NAME", "CITY",
             2, 100, KEY_SKILLS);
 
-    public static final VacancyKeySkillsReport reportWithoutVacancies = new VacancyKeySkillsReport("NAME", "CITY",
-            2, 0, "");
+//    public static final VacancyKeySkillsReport reportWithoutVacancies = new VacancyKeySkillsReport("NAME", "CITY",
+//            2, 0, "");
 
     public static VacancyKeySkillsReport getNew() {
         return new VacancyKeySkillsReport("NAME", "CITY",2, 100, KEY_SKILLS);

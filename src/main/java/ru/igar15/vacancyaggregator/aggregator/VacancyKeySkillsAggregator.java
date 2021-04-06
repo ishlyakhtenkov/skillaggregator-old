@@ -11,6 +11,7 @@ import ru.igar15.vacancyaggregator.util.VacancyKeySkillsReportUtil;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
 import static ru.igar15.vacancyaggregator.aggregator.VacancyConstants.*;
@@ -29,9 +30,13 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeyS
     }
 
     @Override
-    public VacancyKeySkillsReport getReport(String name, String city, int selection) throws IOException {
+    public Optional<VacancyKeySkillsReport> getReport(String name, String city, int selection) throws IOException {
         KeySkillsStatistic keySkillsStatistic = aggregateKeySkillsStatistic(name, city, selection);
-        return VacancyKeySkillsReportUtil.get(name, city, selection, keySkillsStatistic.vacanciesAmount, keySkillsStatistic.keySkills);
+        if (keySkillsStatistic.vacanciesAmount == 0) {
+            return Optional.empty();
+        } else {
+            return Optional.of(VacancyKeySkillsReportUtil.get(name, city, selection, keySkillsStatistic.vacanciesAmount, keySkillsStatistic.keySkills));
+        }
     }
 
     private KeySkillsStatistic aggregateKeySkillsStatistic(String name, String city, int selection) throws IOException {
@@ -42,10 +47,13 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeyS
         Properties vacancyProperties = new Properties();
         boolean isVacancyPropertiesExist = checkVacancyPropertiesExist(name, vacancyProperties);
 
-        int pagesAmount = getPagesAmount(hhRuUrl, selection);
+//        int pagesAmount = getPagesAmount(hhRuUrl, selection);
         Elements vacancies = null;
-        for (int i = 0; i < pagesAmount; i++) {
+        for (int i = 0; i < selection; i++) {
             vacancies = getVacancies(hhRuUrl, i);
+            if (vacancies.size() == 0) {
+                break;
+            }
             for (Element vacancy : vacancies) {
                 vacanciesAmount++;
                 String vacancyUrl = htmlParser.getVacancyUrl(vacancy);
@@ -68,17 +76,17 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeyS
         return new KeySkillsStatistic(vacanciesAmount, keySkills);
     }
 
-    private int getPagesAmount(String url, int selection) throws IOException {
-        int pagesAmount = 0;
-        for (int i = 0; i < 3; i++) {
-            Document firstPage = htmlDocumentCreator.getDocument(String.format(url, 0));
-            pagesAmount = htmlParser.getPagesAmount(firstPage);
-            if (pagesAmount > 0) {
-                break;
-            }
-        }
-        return Math.min(pagesAmount, selection);
-    }
+//    private int getPagesAmount(String url, int selection) throws IOException {
+//        int pagesAmount = 0;
+//        for (int i = 0; i < 3; i++) {
+//            Document firstPage = htmlDocumentCreator.getDocument(String.format(url, 0));
+//            pagesAmount = htmlParser.getPagesAmount(firstPage);
+//            if (pagesAmount > 0) {
+//                break;
+//            }
+//        }
+//        return Math.min(pagesAmount, selection);
+//    }
 
     private Elements getVacancies(String url, int pageNumber) throws IOException {
         Document vacanciesPage = null;

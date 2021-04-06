@@ -16,11 +16,11 @@ import ru.igar15.vacancyaggregator.repository.VacancyKeySkillsReportRepository;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.getNew;
-import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.reportWithoutVacancies;
 
 @SpringJUnitConfig(AppConfig.class)
 @ExtendWith(MockitoExtension.class)
@@ -44,14 +44,14 @@ class VacancyKeySkillsReportServiceTest {
         VacancyKeySkillsReport newReport = getNew();
         newReport.setId(newId);
         assertThat(created).usingRecursiveComparison().isEqualTo(newReport);
-        assertThat(service.getReportToday("name", "city", 2)).usingRecursiveComparison().isEqualTo(newReport);
+        assertThat(service.getReportToday("name", "city", 2).get()).usingRecursiveComparison().isEqualTo(newReport);
     }
 
     @Test
     void getTodayFromAggregator() throws IOException {
-        Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(getNew());
+        Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(Optional.of(getNew()));
 
-        VacancyKeySkillsReport created = service.getReportToday("name", "city", 2);
+        VacancyKeySkillsReport created = service.getReportToday("name", "city", 2).get();
         int newId = created.getId();
         VacancyKeySkillsReport newReport = getNew();
         newReport.setId(newId);
@@ -62,10 +62,10 @@ class VacancyKeySkillsReportServiceTest {
 
     @Test
     void getTodayFromAggregatorWithZeroVacancies() throws IOException {
-        Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(reportWithoutVacancies);
+        Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(Optional.empty());
 
-        VacancyKeySkillsReport report = service.getReportToday("name", "city", 2);
-        assertThat(report).usingRecursiveComparison().isEqualTo(reportWithoutVacancies);
+        Optional<VacancyKeySkillsReport> report = service.getReportToday("name", "city", 2);
+        assertFalse(report.isPresent());
         assertFalse(repository.findByNameAndCityAndDateAndSelection("NAME", "CITY", LocalDate.now(), 2).isPresent());
     }
 }

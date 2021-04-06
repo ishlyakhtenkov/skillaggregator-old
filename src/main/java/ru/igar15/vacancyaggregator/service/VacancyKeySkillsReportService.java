@@ -20,22 +20,20 @@ public class VacancyKeySkillsReportService {
     @Autowired
     private VacancyAggregator<VacancyKeySkillsReport> vacancyKeySkillsAggregator;
 
-    public VacancyKeySkillsReport getReportToday(String name, String city, int selection) throws IOException {
+    public Optional<VacancyKeySkillsReport> getReportToday(String name, String city, int selection) throws IOException {
         Assert.notNull(name, "name must not be null");
         Assert.notNull(city, "city must not be null");
         Optional<VacancyKeySkillsReport> report = repository.findByNameAndCityAndDateAndSelection(name.toUpperCase(), city.toUpperCase(), LocalDate.now(), selection);
-        if (report.isPresent()) {
-            return report.get();
-        } else {
-            VacancyKeySkillsReport vacancyReport = vacancyKeySkillsAggregator.getReport(name.toUpperCase(), city.toUpperCase(), selection);
-            if (vacancyReport.getVacanciesAmount() > 0) {
+        if (report.isEmpty()) {
+            report = vacancyKeySkillsAggregator.getReport(name.toUpperCase(), city.toUpperCase(), selection);
+            if (report.isPresent()) {
                 try {
-                    repository.save(vacancyReport);
+                    repository.save(report.get());
                 } catch (Exception e) {
-                    return vacancyReport;
+                    return report;
                 }
             }
-            return vacancyReport;
         }
+        return report;
     }
 }
