@@ -19,23 +19,28 @@
         <h4>Processed date: ${report.date}</h4>
         <h4>Number of processed vacancies: ${report.vacanciesAmount}</h4>
         <br>
-        <h4 align="center">Key skills</h4>
-        <table class="table table-striped">
-            <thead>
+        <c:if test="${report.keySkills.size() == 0}">
+            <h4 class="text-danger" align="center">Processed vacancies do not have key skills</h4>
+        </c:if>
+        <c:if test="${report.keySkills.size() > 0}">
+            <h4 align="center">Key skills</h4>
+            <table class="table table-striped">
+                <thead>
                 <tr align="center">
                     <th><h5>Technology</h5></th>
                     <th><h5>Percentage of vacancies where required</h5></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <c:forEach items="${report.keySkills}" var="entry">
                     <tr align="center">
                         <td>${entry.key}</td>
                         <td>${entry.value}</td>
                     </tr>
                 </c:forEach>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </c:if>
     </div>
 </div>
 
