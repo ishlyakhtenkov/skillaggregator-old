@@ -37,9 +37,9 @@
                 <div class="row">
                     <div class="col-3">
                         <select name="selection" class="form-control" id="selection">
-                            <option value="2" selected>First 95 (~ 25 sec wait)</option>
-                            <option value="10">First 495 (~ 2 min wait)</option>
-                            <option value="40">First 1995 (~ 8 min wait)</option>
+                            <option value="2" selected>First 100 (~ 25 sec wait)</option>
+                            <option value="10">First 500 (~ 2 min wait)</option>
+                            <option value="40">First 2000 (~ 8 min wait)</option>
                         </select>
                     </div>
                 </div>

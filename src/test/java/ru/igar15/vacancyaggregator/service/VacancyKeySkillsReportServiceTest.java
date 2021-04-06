@@ -19,7 +19,8 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.*;
+import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.getNew;
+import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.reportWithoutVacancies;
 
 @SpringJUnitConfig(AppConfig.class)
 @ExtendWith(MockitoExtension.class)
@@ -34,28 +35,34 @@ class VacancyKeySkillsReportServiceTest {
     private VacancyKeySkillsReportRepository repository;
 
     @Mock
-    private VacancyAggregator aggregator;
+    private VacancyAggregator<VacancyKeySkillsReport> aggregator;
 
     @Test
     void getReportTodayFromRepo() throws IOException {
         VacancyKeySkillsReport created = repository.save(getNew());
-        VacancyKeySkillsReport report = service.getReportToday("name", "city", 2);
-        assertThat(report).usingRecursiveComparison().isEqualTo(created);
+        int newId = created.getId();
+        VacancyKeySkillsReport newReport = getNew();
+        newReport.setId(newId);
+        assertThat(created).usingRecursiveComparison().isEqualTo(newReport);
+        assertThat(service.getReportToday("name", "city", 2)).usingRecursiveComparison().isEqualTo(newReport);
     }
 
     @Test
     void getTodayFromAggregator() throws IOException {
-        Mockito.when(aggregator.getAggregationResult("NAME", "CITY", 2)).thenReturn(report);
+        Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(getNew());
 
-        VacancyKeySkillsReport report = service.getReportToday("name", "city", 2);
-        assertThat(report).usingRecursiveComparison().isEqualTo(report);
+        VacancyKeySkillsReport created = service.getReportToday("name", "city", 2);
+        int newId = created.getId();
+        VacancyKeySkillsReport newReport = getNew();
+        newReport.setId(newId);
+        assertThat(created).usingRecursiveComparison().isEqualTo(newReport);
         assertThat(repository.findByNameAndCityAndDateAndSelection("NAME", "CITY", LocalDate.now(), 2).get())
-                .usingRecursiveComparison().isEqualTo(report);
+                .usingRecursiveComparison().isEqualTo(created);
     }
 
     @Test
     void getTodayFromAggregatorWithZeroVacancies() throws IOException {
-        Mockito.when(aggregator.getAggregationResult("NAME", "CITY", 2)).thenReturn(reportWithoutVacancies);
+        Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(reportWithoutVacancies);
 
         VacancyKeySkillsReport report = service.getReportToday("name", "city", 2);
         assertThat(report).usingRecursiveComparison().isEqualTo(reportWithoutVacancies);

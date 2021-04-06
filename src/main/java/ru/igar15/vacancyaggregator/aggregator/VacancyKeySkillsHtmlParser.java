@@ -9,7 +9,7 @@ public interface VacancyKeySkillsHtmlParser {
 
     int getPagesAmount(Document document);
 
-    Elements getVacancyElements(Document document);
+    Elements getVacancies(Document vacanciesPage);
 
     String getVacancyUrl(Element vacancy);
 

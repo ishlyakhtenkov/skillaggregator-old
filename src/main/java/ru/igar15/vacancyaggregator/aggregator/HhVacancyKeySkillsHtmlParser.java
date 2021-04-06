@@ -25,8 +25,8 @@ public class HhVacancyKeySkillsHtmlParser implements VacancyKeySkillsHtmlParser 
     }
 
     @Override
-    public Elements getVacancyElements(Document document) {
-        return document.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title");
+    public Elements getVacancies(Document vacanciesPage) {
+        return vacanciesPage.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title");
     }
 
     @Override

@@ -3,6 +3,7 @@ package ru.igar15.vacancyaggregator.util;
 import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
 import ru.igar15.vacancyaggregator.to.VacancyKeySkillsReportTo;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,7 +24,22 @@ public class VacancyKeySkillsReportUtil {
         return new VacancyKeySkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), keySkillsMap);
     }
 
-    public static String getS() {
-        return "Hui";
+    public static VacancyKeySkillsReport get(String name, String city, int selection, int vacanciesAmount, Map<String, Integer> keySkills) {
+        StringBuilder builder = new StringBuilder();
+        Util.sortMapByValue(keySkills, Comparator.reverseOrder()).forEach((k, v) -> {
+            long percent = Math.round((double) v / vacanciesAmount * 100);
+            if (percent >= 100) {
+                percent = 100;
+            }
+            if (percent > 0) {
+                builder.append(k)
+                        .append("=%=")
+                        .append(percent)
+                        .append(" %")
+                        .append("\n");
+            }
+        });
+        String formattedKeySkills = builder.toString().trim();
+        return new VacancyKeySkillsReport(name, city, selection, vacanciesAmount, formattedKeySkills);
     }
 }

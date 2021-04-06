@@ -18,7 +18,7 @@ public class VacancyKeySkillsReportService {
     private VacancyKeySkillsReportRepository repository;
 
     @Autowired
-    private VacancyAggregator vacancyKeySkillsAggregator;
+    private VacancyAggregator<VacancyKeySkillsReport> vacancyKeySkillsAggregator;
 
     public VacancyKeySkillsReport getReportToday(String name, String city, int selection) throws IOException {
         Assert.notNull(name, "name must not be null");
@@ -27,7 +27,7 @@ public class VacancyKeySkillsReportService {
         if (report.isPresent()) {
             return report.get();
         } else {
-            VacancyKeySkillsReport vacancyReport = (VacancyKeySkillsReport) vacancyKeySkillsAggregator.getAggregationResult(name.toUpperCase(), city.toUpperCase(), selection);
+            VacancyKeySkillsReport vacancyReport = vacancyKeySkillsAggregator.getReport(name.toUpperCase(), city.toUpperCase(), selection);
             if (vacancyReport.getVacanciesAmount() > 0) {
                 try {
                     repository.save(vacancyReport);
