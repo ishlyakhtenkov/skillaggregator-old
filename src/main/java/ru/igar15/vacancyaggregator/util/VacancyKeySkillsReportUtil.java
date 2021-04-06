@@ -22,4 +22,8 @@ public class VacancyKeySkillsReportUtil {
         }
         return new VacancyKeySkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), keySkillsMap);
     }
+
+    public static String getS() {
+        return "Hui";
+    }
 }
