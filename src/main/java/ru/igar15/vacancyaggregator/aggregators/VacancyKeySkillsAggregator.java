@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
 import ru.igar15.vacancyaggregator.util.Util;
@@ -14,6 +15,9 @@ import java.util.*;
 @Component
 public class VacancyKeySkillsAggregator implements VacancyAggregator {
     private static final String HH_RU_URL_SAMPLE = "https://hh.ru/search/vacancy?text=%s+%s&page=%s";
+
+    @Autowired
+    private HtmlDocumentCreator htmlDocumentCreator;
 
     public VacancyKeySkillsAggregator() {
     }
@@ -71,26 +75,29 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator {
     }
 
     private Document getDocument(String url, int page) throws IOException {
-        return Jsoup.connect(String.format(url, page))
-                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
-                .referrer("http://www.google.com")
-                .get();
+        return htmlDocumentCreator.getDocument(String.format(url, page));
+//        return Jsoup.connect(String.format(url, page))
+//                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
+//                .referrer("http://www.google.com")
+//                .get();
     }
 
     private Document getDocument(String url) throws IOException {
-        return Jsoup.connect(url)
-                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
-                .referrer("http://www.google.com")
-                .get();
+        return htmlDocumentCreator.getDocument(url);
+//        return Jsoup.connect(url)
+//                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
+//                .referrer("http://www.google.com")
+//                .get();
     }
 
     private int getPageAmount(String url, int selection) throws IOException {
         int pageAmount = 0;
         for (int i = 0; i < 3; i++) {
-            Document document = Jsoup.connect(String.format(url, 0))
-                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
-                    .referrer("http://www.google.com")
-                    .get();
+            Document document = htmlDocumentCreator.getDocument(String.format(url, 0));
+//            Document document = Jsoup.connect(String.format(url, 0))
+//                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36")
+//                    .referrer("http://www.google.com")
+//                    .get();
 //            Elements elements = document.getElementsByClass("bloko-button HH-Pager-Control");
             Elements pageNumbersElements = document.getElementById("HH-React-Root")
                     .getElementsByAttributeValueContaining("href", "/search/vacancy");
