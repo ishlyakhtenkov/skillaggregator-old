@@ -30,14 +30,26 @@ public class VacancyKeySkillsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String city = req.getParameter("city");
-        int selection = Integer.parseInt(req.getParameter("selection"));
+        int selection = 0;
+        try {
+            selection = Integer.parseInt(req.getParameter("selection"));
+        } catch (NumberFormatException e) {
+            selection = 2;
+        }
+        if (selection != 2 && selection != 10 && selection != 40) {
+            selection = 2;
+        }
         log.info("get report for vacancy={}, city={}, selection={}", name, city, selection);
-        Optional<VacancyKeySkillsReport> report = service.getReportToday(name, city, selection);
-        if (report.isPresent()) {
-            req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report.get()));
-            req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
-        } else {
+        if (name.isBlank()) {
             req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);
+        } else {
+            Optional<VacancyKeySkillsReport> report = service.getReportToday(name, city, selection);
+            if (report.isPresent()) {
+                req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report.get()));
+                req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);
+            }
         }
     }
 }
