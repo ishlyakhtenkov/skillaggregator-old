@@ -1,3 +1,6 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/967d3f7abe8e4261b6b568286f355e0a)](https://www.codacy.com/gh/igar15/vacancyaggregator/dashboard)
+[![Build Status](https://travis-ci.com/igar15/vacancyaggregator.svg?branch=master)](https://travis-ci.com/github/igar15/vacancyaggregator)
+
 Vacancy Aggregator Project 
 =================================
 

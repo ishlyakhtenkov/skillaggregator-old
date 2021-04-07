@@ -7,6 +7,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
 import ru.igar15.vacancyaggregator.aggregator.VacancyAggregator;
@@ -25,6 +27,7 @@ import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.getNew;
 @SpringJUnitConfig(AppConfig.class)
 @ExtendWith(MockitoExtension.class)
 @Transactional
+@Sql(scripts = "classpath:db/initDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 class VacancyKeySkillsReportServiceTest {
 
     @Autowired
