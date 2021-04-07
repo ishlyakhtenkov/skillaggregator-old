@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "vacancy_key_skills_reports")
-public class VacancyKeySkillsReport extends VacancyReport {
+public class SkillsReport extends Report {
 
     @Column(name = "vacancies_amount")
     private int vacanciesAmount;
@@ -15,14 +15,14 @@ public class VacancyKeySkillsReport extends VacancyReport {
     @Column(name = "key_skills")
     private String keySkills;
 
-    public VacancyKeySkillsReport() {
+    public SkillsReport() {
     }
 
-    public VacancyKeySkillsReport(String name, String city, int selection, int vacanciesAmount, String keySkills) {
+    public SkillsReport(String name, String city, int selection, int vacanciesAmount, String keySkills) {
         this(null, name, city, LocalDate.now(), selection, vacanciesAmount, keySkills);
     }
 
-    public VacancyKeySkillsReport(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, String keySkills) {
+    public SkillsReport(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, String keySkills) {
         super(id, name, city, date, selection);
         this.vacanciesAmount = vacanciesAmount;
         this.keySkills = keySkills;

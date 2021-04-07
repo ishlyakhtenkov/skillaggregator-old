@@ -1,11 +1,11 @@
 package ru.igar15.vacancyaggregator;
 
-import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
+import ru.igar15.vacancyaggregator.model.SkillsReport;
 
-public class VacancyKeySkillsReportTestData {
+public class SkillsReportTestData {
     private static final String KEY_SKILLS = "JAVA=%=100 %\nSPRING FRAMEWORK=%=49 %\nGIT=%=40 %\nPOSTGRESQL=%=31 %";
 
-    public static final VacancyKeySkillsReport report = new VacancyKeySkillsReport("NAME", "CITY",
+    public static final SkillsReport report = new SkillsReport("NAME", "CITY",
             2, 100, KEY_SKILLS);
 
     public static final String AGGREGATOR_REPORT_KEY_SKILLS = "JAVA=%=82 %\n" +
@@ -108,13 +108,13 @@ public class VacancyKeySkillsReportTestData {
             "РАБОТА В КОМАНДЕ=%=2 %\n" +
             "РАЗРАБОТКА ПО=%=2 %";
 
-    public static final VacancyKeySkillsReport aggregatorReport = new VacancyKeySkillsReport("java", "moscow",
+    public static final SkillsReport aggregatorReport = new SkillsReport("java", "moscow",
             1, 50, AGGREGATOR_REPORT_KEY_SKILLS);
 
 //    public static final VacancyKeySkillsReport reportWithoutVacancies = new VacancyKeySkillsReport("NAME", "CITY",
 //            2, 0, "");
 
-    public static VacancyKeySkillsReport getNew() {
-        return new VacancyKeySkillsReport("NAME", "CITY",2, 100, KEY_SKILLS);
+    public static SkillsReport getNew() {
+        return new SkillsReport("NAME", "CITY",2, 100, KEY_SKILLS);
     }
 }

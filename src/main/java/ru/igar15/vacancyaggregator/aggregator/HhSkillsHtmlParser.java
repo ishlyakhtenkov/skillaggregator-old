@@ -6,7 +6,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HhVacancyKeySkillsHtmlParser implements VacancyKeySkillsHtmlParser {
+public class HhSkillsHtmlParser implements SkillsHtmlParser {
 
     @Override
     public Elements getVacancies(Document vacanciesPage) {

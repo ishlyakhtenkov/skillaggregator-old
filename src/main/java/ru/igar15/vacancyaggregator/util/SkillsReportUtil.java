@@ -1,20 +1,20 @@
 package ru.igar15.vacancyaggregator.util;
 
-import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
-import ru.igar15.vacancyaggregator.to.VacancyKeySkillsReportTo;
+import ru.igar15.vacancyaggregator.model.SkillsReport;
+import ru.igar15.vacancyaggregator.to.SkillsReportTo;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class VacancyKeySkillsReportUtil {
+public class SkillsReportUtil {
     private final static String DELIMITER = "=%=";
 
-    private VacancyKeySkillsReportUtil() {
+    private SkillsReportUtil() {
         throw new UnsupportedOperationException();
     }
 
-    public static VacancyKeySkillsReportTo getTo(VacancyKeySkillsReport report) {
+    public static SkillsReportTo getTo(SkillsReport report) {
         String keySkills = report.getKeySkills();
         Map<String, String> keySkillsMap = new LinkedHashMap<>();
         if (!keySkills.isBlank()) {
@@ -26,10 +26,10 @@ public class VacancyKeySkillsReportUtil {
                 }
             }
         }
-        return new VacancyKeySkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), keySkillsMap);
+        return new SkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), keySkillsMap);
     }
 
-    public static VacancyKeySkillsReport get(String name, String city, int selection, int vacanciesAmount, Map<String, Integer> keySkills) {
+    public static SkillsReport get(String name, String city, int selection, int vacanciesAmount, Map<String, Integer> keySkills) {
         StringBuilder builder = new StringBuilder();
         if (vacanciesAmount > 0 && keySkills.size() > 0) {
             Util.sortMapByValue(keySkills, Comparator.reverseOrder()).forEach((k, v) -> {
@@ -47,6 +47,6 @@ public class VacancyKeySkillsReportUtil {
             });
         }
         String formattedKeySkills = builder.toString().trim();
-        return new VacancyKeySkillsReport(name, city, selection, vacanciesAmount, formattedKeySkills);
+        return new SkillsReport(name, city, selection, vacanciesAmount, formattedKeySkills);
     }
 }

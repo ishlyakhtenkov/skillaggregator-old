@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HhVacancyKeySkillsHtmlParserTest {
+class HhSkillsHtmlParserTest {
     private final Document vacanciesPage = Jsoup.parse(new File("src/test/resources/first.html"), "UTF-8");
 
-    private final VacancyKeySkillsHtmlParser htmlParser = new HhVacancyKeySkillsHtmlParser();
+    private final SkillsHtmlParser htmlParser = new HhSkillsHtmlParser();
 
-    HhVacancyKeySkillsHtmlParserTest() throws IOException {
+    HhSkillsHtmlParserTest() throws IOException {
     }
 
     @Test

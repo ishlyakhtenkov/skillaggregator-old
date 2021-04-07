@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class VacancyReport {
+public abstract class Report {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -27,10 +27,10 @@ public abstract class VacancyReport {
     @Column(name = "selection")
     protected int selection = 2;
 
-    public VacancyReport() {
+    public Report() {
     }
 
-    public VacancyReport(Integer id, String name, String city, LocalDate date, int selection) {
+    public Report(Integer id, String name, String city, LocalDate date, int selection) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -86,7 +86,7 @@ public abstract class VacancyReport {
         if (o == null || !getClass().equals(Hibernate.getClass(o))) {
             return false;
         }
-        VacancyReport that = (VacancyReport) o;
+        Report that = (Report) o;
         return id != null && id.equals(that.id);
     }
 

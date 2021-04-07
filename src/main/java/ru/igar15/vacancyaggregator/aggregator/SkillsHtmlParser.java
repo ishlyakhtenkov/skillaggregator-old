@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
-public interface VacancyKeySkillsHtmlParser {
+public interface SkillsHtmlParser {
 
     Elements getVacancies(Document vacanciesPage);
 

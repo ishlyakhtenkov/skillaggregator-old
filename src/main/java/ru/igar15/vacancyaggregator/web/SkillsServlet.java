@@ -3,9 +3,9 @@ package ru.igar15.vacancyaggregator.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
-import ru.igar15.vacancyaggregator.service.VacancyKeySkillsReportService;
-import ru.igar15.vacancyaggregator.util.VacancyKeySkillsReportUtil;
+import ru.igar15.vacancyaggregator.model.SkillsReport;
+import ru.igar15.vacancyaggregator.service.SkillsReportService;
+import ru.igar15.vacancyaggregator.util.SkillsReportUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-public class VacancyKeySkillsServlet extends HttpServlet {
+public class SkillsServlet extends HttpServlet {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private VacancyKeySkillsReportService service;
+    private SkillsReportService service;
 
     @Override
     public void init() throws ServletException {
         AnnotationConfigApplicationContext context =
                 (AnnotationConfigApplicationContext) getServletContext().getAttribute("appContext");
-        service = context.getBean(VacancyKeySkillsReportService.class);
+        service = context.getBean(SkillsReportService.class);
     }
 
     @Override
@@ -43,9 +43,9 @@ public class VacancyKeySkillsServlet extends HttpServlet {
         if (name.isBlank()) {
             req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);
         } else {
-            Optional<VacancyKeySkillsReport> report = service.getReportToday(name, city, selection);
+            Optional<SkillsReport> report = service.getReportToday(name, city, selection);
             if (report.isPresent()) {
-                req.setAttribute("report", VacancyKeySkillsReportUtil.getTo(report.get()));
+                req.setAttribute("report", SkillsReportUtil.getTo(report.get()));
                 req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
             } else {
                 req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);

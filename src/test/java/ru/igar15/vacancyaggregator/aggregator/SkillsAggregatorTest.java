@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import ru.igar15.vacancyaggregator.config.AppConfig;
-import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
+import ru.igar15.vacancyaggregator.model.SkillsReport;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,15 +18,15 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.aggregatorReport;
+import static ru.igar15.vacancyaggregator.SkillsReportTestData.aggregatorReport;
 
 @SpringJUnitConfig(AppConfig.class)
 @ExtendWith(MockitoExtension.class)
-class VacancyKeySkillsAggregatorTest {
+class SkillsAggregatorTest {
 
     @Autowired
     @InjectMocks
-    private VacancyKeySkillsAggregator aggregator;
+    private SkillsAggregator aggregator;
 
     @Mock
     private HtmlDocumentCreator htmlDocumentCreator;
@@ -34,7 +34,7 @@ class VacancyKeySkillsAggregatorTest {
     @Test
     void getReport() throws IOException {
         setupMockHtmlDocumentCreator();
-        Optional<VacancyKeySkillsReport> report = aggregator.getReport("java", "moscow", 1);
+        Optional<SkillsReport> report = aggregator.getReport("java", "moscow", 1);
         assertThat(report.get()).usingRecursiveComparison().isEqualTo(aggregatorReport);
     }
 
@@ -42,7 +42,7 @@ class VacancyKeySkillsAggregatorTest {
     void getReportWhenVacanciesNotFound() throws IOException {
         Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=zzzzz+moscow&search_field=name&page=0"))
                 .thenReturn(Jsoup.parse(new File("src/test/resources/notfound.html"), "UTF-8"));
-        Optional<VacancyKeySkillsReport> report = aggregator.getReport("zzzzz", "moscow", 1);
+        Optional<SkillsReport> report = aggregator.getReport("zzzzz", "moscow", 1);
         assertFalse(report.isPresent());
     }
 

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
 
-public class VacancyKeySkillsReportTo {
+public class SkillsReportTo {
     private Integer id;
     private String name;
     private String city;
@@ -13,7 +13,7 @@ public class VacancyKeySkillsReportTo {
     private int vacanciesAmount;
     private Map<String, String> keySkills;
 
-    public VacancyKeySkillsReportTo(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, Map<String, String> keySkills) {
+    public SkillsReportTo(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, Map<String, String> keySkills) {
         this.id = id;
         this.name = name;
         this.city = city;
@@ -55,7 +55,7 @@ public class VacancyKeySkillsReportTo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VacancyKeySkillsReportTo that = (VacancyKeySkillsReportTo) o;
+        SkillsReportTo that = (SkillsReportTo) o;
         return selection == that.selection &&
                 vacanciesAmount == that.vacanciesAmount &&
                 Objects.equals(id, that.id) &&

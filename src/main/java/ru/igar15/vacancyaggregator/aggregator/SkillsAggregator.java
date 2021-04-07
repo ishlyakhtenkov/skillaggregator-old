@@ -5,8 +5,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
-import ru.igar15.vacancyaggregator.util.VacancyKeySkillsReportUtil;
+import ru.igar15.vacancyaggregator.model.SkillsReport;
+import ru.igar15.vacancyaggregator.util.SkillsReportUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,25 +17,25 @@ import java.util.Properties;
 import static ru.igar15.vacancyaggregator.aggregator.VacancyConstants.*;
 
 @Component
-public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeySkillsReport> {
+public class SkillsAggregator implements Aggregator<SkillsReport> {
     private static final String HH_RU_URL_SAMPLE = "https://hh.ru/search/vacancy?text=%s+%s&search_field=name&page=%s";
 
     @Autowired
     private HtmlDocumentCreator htmlDocumentCreator;
 
     @Autowired
-    private VacancyKeySkillsHtmlParser htmlParser;
+    private SkillsHtmlParser htmlParser;
 
-    public VacancyKeySkillsAggregator() {
+    public SkillsAggregator() {
     }
 
     @Override
-    public Optional<VacancyKeySkillsReport> getReport(String name, String city, int selection) throws IOException {
+    public Optional<SkillsReport> getReport(String name, String city, int selection) throws IOException {
         KeySkillsStatistic keySkillsStatistic = aggregateKeySkillsStatistic(name, city, selection);
         if (keySkillsStatistic.vacanciesAmount == 0) {
             return Optional.empty();
         } else {
-            return Optional.of(VacancyKeySkillsReportUtil.get(name, city, selection, keySkillsStatistic.vacanciesAmount, keySkillsStatistic.keySkills));
+            return Optional.of(SkillsReportUtil.get(name, city, selection, keySkillsStatistic.vacanciesAmount, keySkillsStatistic.keySkills));
         }
     }
 

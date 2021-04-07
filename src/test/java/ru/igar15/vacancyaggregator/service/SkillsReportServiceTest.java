@@ -11,10 +11,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
-import ru.igar15.vacancyaggregator.aggregator.VacancyAggregator;
+import ru.igar15.vacancyaggregator.aggregator.Aggregator;
 import ru.igar15.vacancyaggregator.config.AppConfig;
-import ru.igar15.vacancyaggregator.model.VacancyKeySkillsReport;
-import ru.igar15.vacancyaggregator.repository.VacancyKeySkillsReportRepository;
+import ru.igar15.vacancyaggregator.model.SkillsReport;
+import ru.igar15.vacancyaggregator.repository.SkillsReportRepository;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,29 +22,29 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static ru.igar15.vacancyaggregator.VacancyKeySkillsReportTestData.getNew;
+import static ru.igar15.vacancyaggregator.SkillsReportTestData.getNew;
 
 @SpringJUnitConfig(AppConfig.class)
 @ExtendWith(MockitoExtension.class)
 @Transactional
 @Sql(scripts = "classpath:db/initDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-class VacancyKeySkillsReportServiceTest {
+class SkillsReportServiceTest {
 
     @Autowired
     @InjectMocks
-    private VacancyKeySkillsReportService service;
+    private SkillsReportService service;
 
     @Autowired
-    private VacancyKeySkillsReportRepository repository;
+    private SkillsReportRepository repository;
 
     @Mock
-    private VacancyAggregator<VacancyKeySkillsReport> aggregator;
+    private Aggregator<SkillsReport> aggregator;
 
     @Test
     void getReportTodayFromRepo() throws IOException {
-        VacancyKeySkillsReport created = repository.save(getNew());
+        SkillsReport created = repository.save(getNew());
         int newId = created.getId();
-        VacancyKeySkillsReport newReport = getNew();
+        SkillsReport newReport = getNew();
         newReport.setId(newId);
         assertThat(created).usingRecursiveComparison().isEqualTo(newReport);
         assertThat(service.getReportToday("name", "city", 2).get()).usingRecursiveComparison().isEqualTo(newReport);
@@ -54,9 +54,9 @@ class VacancyKeySkillsReportServiceTest {
     void getTodayFromAggregator() throws IOException {
         Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(Optional.of(getNew()));
 
-        VacancyKeySkillsReport created = service.getReportToday("name", "city", 2).get();
+        SkillsReport created = service.getReportToday("name", "city", 2).get();
         int newId = created.getId();
-        VacancyKeySkillsReport newReport = getNew();
+        SkillsReport newReport = getNew();
         newReport.setId(newId);
         assertThat(created).usingRecursiveComparison().isEqualTo(newReport);
         assertThat(repository.findByNameAndCityAndDateAndSelection("NAME", "CITY", LocalDate.now(), 2).get())
@@ -67,7 +67,7 @@ class VacancyKeySkillsReportServiceTest {
     void getTodayFromAggregatorWithZeroVacancies() throws IOException {
         Mockito.when(aggregator.getReport("NAME", "CITY", 2)).thenReturn(Optional.empty());
 
-        Optional<VacancyKeySkillsReport> report = service.getReportToday("name", "city", 2);
+        Optional<SkillsReport> report = service.getReportToday("name", "city", 2);
         assertFalse(report.isPresent());
         assertFalse(repository.findByNameAndCityAndDateAndSelection("NAME", "CITY", LocalDate.now(), 2).isPresent());
     }
