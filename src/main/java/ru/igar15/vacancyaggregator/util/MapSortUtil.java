@@ -2,8 +2,8 @@ package ru.igar15.vacancyaggregator.util;
 
 import java.util.*;
 
-public class Util {
-    private Util() {
+public class MapSortUtil {
+    private MapSortUtil() {
         throw new UnsupportedOperationException();
     }
 

@@ -26,9 +26,6 @@ public class SkillsAggregator implements Aggregator<SkillsReport> {
     @Autowired
     private SkillsHtmlParser htmlParser;
 
-    public SkillsAggregator() {
-    }
-
     @Override
     public Optional<SkillsReport> getReport(String name, String city, int selection) throws IOException {
         KeySkillsStatistic keySkillsStatistic = aggregateKeySkillsStatistic(name, city, selection);
@@ -63,10 +60,8 @@ public class SkillsAggregator implements Aggregator<SkillsReport> {
                     if (keySkill.contains(ENGLISH_KEY_SKILL_PATTERN)) {
                         keySkill = ENGLISH_KEY_SKILL_VALUE;
                     }
-                    if (isVacancyPropertiesExist) {
-                        if (vacancyProperties.containsKey(keySkill)) {
-                            keySkill = vacancyProperties.getProperty(keySkill);
-                        }
+                    if (isVacancyPropertiesExist && vacancyProperties.containsKey(keySkill)) {
+                        keySkill = vacancyProperties.getProperty(keySkill);
                     }
                     keySkills.merge(keySkill, 1, Integer::sum);
                 }

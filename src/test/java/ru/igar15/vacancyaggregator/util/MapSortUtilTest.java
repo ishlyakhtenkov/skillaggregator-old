@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class UtilTest {
+class MapSortUtilTest {
 
     @Test
     void sortMapByValue() {
@@ -24,7 +24,7 @@ class UtilTest {
         expectedMap.put("key2", 20);
         String expectedMapKeySetOrder = expectedMap.keySet().stream().collect(Collectors.joining(","));
 
-        Map<String, Integer> actualMap = Util.sortMapByValue(mapTestData, Comparator.reverseOrder());
+        Map<String, Integer> actualMap = MapSortUtil.sortMapByValue(mapTestData, Comparator.reverseOrder());
         String actualMapKeySetOrder = actualMap.keySet().stream().collect(Collectors.joining(","));
         assertEquals(expectedMapKeySetOrder, actualMapKeySetOrder);
     }

@@ -32,7 +32,7 @@ public class SkillsReportUtil {
     public static SkillsReport get(String name, String city, int selection, int vacanciesAmount, Map<String, Integer> keySkills) {
         StringBuilder builder = new StringBuilder();
         if (vacanciesAmount > 0 && keySkills.size() > 0) {
-            Util.sortMapByValue(keySkills, Comparator.reverseOrder()).forEach((k, v) -> {
+            MapSortUtil.sortMapByValue(keySkills, Comparator.reverseOrder()).forEach((k, v) -> {
                 long percent = Math.round((double) v / vacanciesAmount * 100);
                 if (percent >= 100) {
                     percent = 100;
