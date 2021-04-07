@@ -47,7 +47,6 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeyS
         Properties vacancyProperties = new Properties();
         boolean isVacancyPropertiesExist = checkVacancyPropertiesExist(name, vacancyProperties);
 
-//        int pagesAmount = getPagesAmount(hhRuUrl, selection);
         Elements vacancies = null;
         for (int i = 0; i < selection; i++) {
             vacancies = getVacancies(hhRuUrl, i);
@@ -75,18 +74,6 @@ public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeyS
         }
         return new KeySkillsStatistic(vacanciesAmount, keySkills);
     }
-
-//    private int getPagesAmount(String url, int selection) throws IOException {
-//        int pagesAmount = 0;
-//        for (int i = 0; i < 3; i++) {
-//            Document firstPage = htmlDocumentCreator.getDocument(String.format(url, 0));
-//            pagesAmount = htmlParser.getPagesAmount(firstPage);
-//            if (pagesAmount > 0) {
-//                break;
-//            }
-//        }
-//        return Math.min(pagesAmount, selection);
-//    }
 
     private Elements getVacancies(String url, int pageNumber) throws IOException {
         Document vacanciesPage = null;

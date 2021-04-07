@@ -7,8 +7,6 @@ import org.jsoup.select.Elements;
 
 public interface VacancyKeySkillsHtmlParser {
 
-//    int getPagesAmount(Document document);
-
     Elements getVacancies(Document vacanciesPage);
 
     String getVacancyUrl(Element vacancy);

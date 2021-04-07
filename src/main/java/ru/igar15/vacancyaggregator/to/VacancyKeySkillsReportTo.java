@@ -1,7 +1,6 @@
 package ru.igar15.vacancyaggregator.to;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
