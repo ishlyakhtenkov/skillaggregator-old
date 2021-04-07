@@ -1,16 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Vacancy Aggregator</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-</head>
+<jsp:include page="WEB-INF/jsp/fragments/headTag.jsp"/>
 <body>
 <div class="jumbotron">
     <div class="container">
         <h2>Good day!</h2>
         <h3>It is an aggregator of key job skills!</h3>
-        <h3>Please input vacancy name and city (not necessary), where you want to find!</h3>
+        <h3>Please input vacancy name and city (city is optional), where you want to find!</h3>
         <h3>It will show you which skills are most in demand for the selected vacancy!</h3>
         <h3>It takes information from <a href="https://hh.ru">Head hunters Russia</a>, so if you want to find with city,</h3>
         <h3>enter its name in Russian.</h3>
@@ -49,5 +45,6 @@
         </form>
     </div>
 </div>
+<jsp:include page="WEB-INF/jsp/fragments/footer.jsp"/>
 </body>
 </html>
