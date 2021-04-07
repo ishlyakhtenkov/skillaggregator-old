@@ -20,10 +20,10 @@
         <h4>Number of processed vacancies: ${report.vacanciesAmount}</h4>
         <br>
         <c:if test="${report.keySkills.size() == 0}">
-            <h4 class="text-danger" align="center">Processed vacancies do not have key skills</h4>
+            <h3 class="text-danger" align="center">Processed vacancies do not have key skills</h3>
         </c:if>
         <c:if test="${report.keySkills.size() > 0}">
-            <h4 align="center">Key skills</h4>
+            <h3 align="center">Key skills</h3>
             <table class="table table-striped">
                 <thead>
                 <tr align="center">

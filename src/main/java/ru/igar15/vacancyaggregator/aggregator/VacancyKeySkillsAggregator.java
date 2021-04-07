@@ -18,7 +18,7 @@ import static ru.igar15.vacancyaggregator.aggregator.VacancyConstants.*;
 
 @Component
 public class VacancyKeySkillsAggregator implements VacancyAggregator<VacancyKeySkillsReport> {
-    private static final String HH_RU_URL_SAMPLE = "https://hh.ru/search/vacancy?text=%s+%s&page=%s";
+    private static final String HH_RU_URL_SAMPLE = "https://hh.ru/search/vacancy?text=%s+%s&search_field=name&page=%s";
 
     @Autowired
     private HtmlDocumentCreator htmlDocumentCreator;

@@ -40,14 +40,14 @@ class VacancyKeySkillsAggregatorTest {
 
     @Test
     void getReportWhenVacanciesNotFound() throws IOException {
-        Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=zzzzz+moscow&page=0"))
+        Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=zzzzz+moscow&search_field=name&page=0"))
                 .thenReturn(Jsoup.parse(new File("src/test/resources/notfound.html"), "UTF-8"));
         Optional<VacancyKeySkillsReport> report = aggregator.getReport("zzzzz", "moscow", 1);
         assertFalse(report.isPresent());
     }
 
     private void setupMockHtmlDocumentCreator() throws IOException {
-        Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=java+moscow&page=0"))
+        Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=java+moscow&search_field=name&page=0"))
                 .thenReturn(Jsoup.parse(new File("src/test/resources/first.html"), "UTF-8"));
         String urlRegex = "https://hh.ru/vacancy/%s";
         String fileRegex = "src/test/resources/html/%s.html";

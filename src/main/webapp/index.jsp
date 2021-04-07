@@ -10,9 +10,10 @@
     <div class="container">
         <h2>Good day!</h2>
         <h3>It is an aggregator of key job skills!</h3>
-        <h3>Please input vacancy name and city, where you want to find!</h3>
-        <h3>We will show you which skills are most in demand for the selected vacancy!</h3>
-        <h3>We take information from <a href="https://hh.ru">Head hunters Russia</a></h3>
+        <h3>Please input vacancy name and city (not necessary), where you want to find!</h3>
+        <h3>It will show you which skills are most in demand for the selected vacancy!</h3>
+        <h3>It takes information from <a href="https://hh.ru">Head hunters Russia</a>, so if you want to find with city,</h3>
+        <h3>enter its name in Russian.</h3>
         <h3>It may take time! So wait a little bit.</h3>
         <br>
         <form method="get" action="keySkills">
@@ -20,7 +21,7 @@
                 <label for="name" class="col-form-label">Vacancy name:</label>
                 <div class="row">
                     <div class="col-3">
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                 </div>
             </div>
