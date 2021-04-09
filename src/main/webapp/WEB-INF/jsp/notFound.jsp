@@ -4,7 +4,7 @@
 <body>
 <div class="jumbotron">
     <div class="container">
-        <h5><a href="index.jsp">Home</a></h5>
+        <h5><a href="${pageContext.request.contextPath}">Home</a></h5>
         <hr>
         <br>
         <h3>No vacancies found for your request!</h3>

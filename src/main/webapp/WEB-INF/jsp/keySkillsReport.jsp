@@ -6,7 +6,7 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <jsp:useBean id="report" type="ru.igar15.vacancyaggregator.to.SkillsReportTo" scope="request"/>
-        <h5><a href="index.jsp">Home</a></h5>
+        <h5><a href="${pageContext.request.contextPath}">Home</a></h5>
         <hr>
         <br>
         <h4>Vacancy name: ${report.name}</h4>
