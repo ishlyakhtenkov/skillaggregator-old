@@ -41,14 +41,14 @@ public class SkillsServlet extends HttpServlet {
         }
         log.info("get report for vacancy={}, city={}, selection={}", name, city, selection);
         if (name.isBlank()) {
-            req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
         } else {
             Optional<SkillsReport> report = service.getReportToday(name, city, selection);
             if (report.isPresent()) {
                 req.setAttribute("report", SkillsReportUtil.getTo(report.get()));
                 req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
             } else {
-                req.getRequestDispatcher("WEB-INF/jsp/notFound.jsp").forward(req, resp);
+                req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
             }
         }
     }
