@@ -3,11 +3,12 @@ package ru.igar15.vacancyaggregator.model;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class Report {
+public abstract class Report implements Serializable {
     public static final int START_SEQ = 100000;
 
     @Id

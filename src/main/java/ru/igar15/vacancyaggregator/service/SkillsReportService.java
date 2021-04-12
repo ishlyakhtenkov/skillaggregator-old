@@ -9,6 +9,7 @@ import ru.igar15.vacancyaggregator.repository.SkillsReportRepository;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,5 +36,17 @@ public class SkillsReportService {
             }
         }
         return report;
+    }
+
+    public List<SkillsReport> getAllReportsToday() {
+        return repository.findAllByDate(LocalDate.now());
+    }
+
+    public void deleteAllReportsToday() {
+        repository.deleteAllByDate(LocalDate.now());
+    }
+
+    public void deleteReportToday(String name, String city, int selection) {
+        repository.deleteByNameAndCityAndDateAndSelection(name.toUpperCase(), city.toUpperCase(), LocalDate.now(), selection);
     }
 }
