@@ -12,7 +12,7 @@
     <properties>
         <java.version>15</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding></project.reporting.outputEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <spring.version>5.3.4</spring.version>
         <spring-data-jpa.version>2.4.5</spring-data-jpa.version>
