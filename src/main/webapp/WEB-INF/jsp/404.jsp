@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<jsp:include page="WEB-INF/jsp/fragments/headTag.jsp"/>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
 <div class="jumbotron">
     <div class="container">
@@ -11,6 +11,6 @@
         <h1>404</h1>
     </div>
 </div>
-<jsp:include page="WEB-INF/jsp/fragments/footer.jsp"/>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

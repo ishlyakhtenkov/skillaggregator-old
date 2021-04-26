@@ -2,19 +2,22 @@
 <html>
 <jsp:include page="WEB-INF/jsp/fragments/headTag.jsp"/>
 <body>
-<div class="jumbotron">
+    <div class="jumbotron">
+        <div class="container">
+            <h2>Good day!</h2>
+            <h3>It is an aggregator of key job skills!</h3>
+            <h3>Please input profession name and city (city is optional), where you want to find!</h3>
+            <h3>It will show you which skills are most in demand for the selected profession!</h3>
+            <h3>It takes information from <a href="https://hh.ru">Head hunters Russia</a>, so if you want to find with city,</h3>
+            <h3>enter its name in Russian.</h3>
+            <h3>It may take time! So wait a little bit.</h3>
+        </div>
+    </div>
+
     <div class="container">
-        <h2>Good day!</h2>
-        <h3>It is an aggregator of key job skills!</h3>
-        <h3>Please input vacancy name and city (city is optional), where you want to find!</h3>
-        <h3>It will show you which skills are most in demand for the selected vacancy!</h3>
-        <h3>It takes information from <a href="https://hh.ru">Head hunters Russia</a>, so if you want to find with city,</h3>
-        <h3>enter its name in Russian.</h3>
-        <h3>It may take time! So wait a little bit.</h3>
-        <br>
         <form method="get" action="keySkills">
             <div class="form-group">
-                <label for="name" class="col-form-label">Vacancy name:</label>
+                <label for="name" class="col-form-label">Profession name:</label>
                 <div class="row">
                     <div class="col-3">
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -44,7 +47,8 @@
             <button class="btn btn-primary" type="submit">Request</button>
         </form>
     </div>
-</div>
-<jsp:include page="WEB-INF/jsp/fragments/footer.jsp"/>
+    <br>
+
+    <jsp:include page="WEB-INF/jsp/fragments/footer.jsp"/>
 </body>
 </html>
