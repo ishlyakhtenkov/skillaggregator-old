@@ -45,12 +45,12 @@ li{ margin-bottom: 6px}
 
 a[href^="http://habrahabr.ru"] {
     padding-left: 20px !important;
-    background: url(../../img/habrahabr.png) no-repeat center left;
+    background: url(../img/habrahabr.png) no-repeat center left;
 }
 
 a[href^="https://github.com"] {
     padding-left: 20px !important;
-    background: url(../../img/github.png) no-repeat center left;
+    background: url(../img/github.png) no-repeat center left;
 }
 /* Header
 
@@ -126,12 +126,12 @@ z-index: 5;
 
 a[href^="cv.html"],a[href^="../en/cv_en.html"]{
     padding-left: 20px;
-    background: url(../../img/html.png) no-repeat center left;
+    background: url(../img/html.png) no-repeat center left;
 }
 
 a[href^="mailto:"]{
     padding-left: 20px;
-    background: url(../../img/email.png) no-repeat center left;
+    background: url(../img/email.png) no-repeat center left;
 }
 
 a[href^="http://vk.com"]{
@@ -146,10 +146,10 @@ a[href^="http://www.youtube.com"]{
 
 a[href^="skype:"]{
     padding-left: 20px;
-    background: url(../../img/skype.png) no-repeat center left;
+    background: url(../img/skype.png) no-repeat center left;
 }
 
 a[href$=".pdf"]{
     padding-left: 20px;
-    background: url(../../img/pdf.png) no-repeat center left;
+    background: url(../img/pdf.png) no-repeat center left;
 }
