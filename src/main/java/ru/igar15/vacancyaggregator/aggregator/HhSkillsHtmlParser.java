@@ -5,8 +5,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class HhSkillsHtmlParser implements SkillsHtmlParser {
+    private static final String HH_RU_VACANCY_URL_SAMPLE = "https://hh.ru/vacancy/%s";
 
     @Override
     public Elements getVacancies(Document vacanciesPage) {
@@ -19,7 +23,31 @@ public class HhSkillsHtmlParser implements SkillsHtmlParser {
     }
 
     @Override
+    public List<String> getVacanciesUrl(Document vacanciesPage) {
+        String page = vacanciesPage.toString();
+        String[] split = page.split("\"vacancyId\": ");
+        List<String> vacanciesUrl = new ArrayList<>();
+        for (String tempString : split) {
+            if (isVacancyId(tempString)) {
+                vacanciesUrl.add(String.format(HH_RU_VACANCY_URL_SAMPLE, tempString.split(",")[0]));
+            }
+        }
+        return vacanciesUrl;
+    }
+
+    @Override
     public Elements getVacancyKeySkills(Document vacancyPage) {
         return vacancyPage.getElementsByAttributeValue("data-qa", "bloko-tag__text");
+    }
+
+    private boolean isVacancyId(String line) {
+        boolean isVacancyId = false;
+        for (int i = 0; i < 10; i++) {
+            isVacancyId = line.startsWith("" + i);
+            if (isVacancyId) {
+                break;
+            }
+        }
+        return isVacancyId;
     }
 }

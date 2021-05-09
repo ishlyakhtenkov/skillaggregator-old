@@ -1,6 +1,7 @@
 package ru.igar15.vacancyaggregator.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.igar15.vacancyaggregator.aggregator.Aggregator;
@@ -19,6 +20,7 @@ public class SkillsReportService {
     private SkillsReportRepository repository;
 
     @Autowired
+    @Qualifier("skillsAggregatorV2")
     private Aggregator<SkillsReport> vacancyKeySkillsAggregator;
 
     public Optional<SkillsReport> getReportToday(String name, String city, int selection) throws IOException {
