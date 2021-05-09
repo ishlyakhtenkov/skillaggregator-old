@@ -1,39 +1,41 @@
 package ru.igar15.vacancyaggregator.aggregator;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 @Component
-public class SkillsAggregatorV2 extends AbstractSkillsAggregator {
+public class SkillsAggregatorV1 extends AbstractSkillsAggregator {
 
     @Override
     public void getAllVacanciesKeySkills(String hhRuUrl, int selection, boolean isVacancyPropertiesExist,
                                          Properties vacancyProperties, Map<String, Integer> keySkills,
                                          int[] vacanciesAmount) throws IOException {
-        List<String> vacanciesUrl= null;
+        Elements vacancies = null;
         for (int i = 0; i < selection; i++) {
-            vacanciesUrl = getVacanciesUrl(hhRuUrl, i);
-            if (vacanciesUrl.size() == 0) {
+            vacancies = getVacancies(hhRuUrl, i);
+            if (vacancies.size() == 0) {
                 break;
             }
-            for (String vacancyUrl : vacanciesUrl) {
+            for (Element vacancy : vacancies) {
+                String vacancyUrl = htmlParser.getVacancyUrl(vacancy);
                 getVacancyKeySkills(vacancyUrl, isVacancyPropertiesExist, vacancyProperties, keySkills, vacanciesAmount);
             }
         }
     }
 
-    private List<String> getVacanciesUrl(String url, int pageNumber) throws IOException {
+    private Elements getVacancies(String url, int pageNumber) throws IOException {
         Document vacanciesPage = null;
-        List<String> vacanciesUrl = null;
+        Elements vacancies = null;
         for (int i = 0; i < 10; i++) {
             vacanciesPage = htmlDocumentCreator.getDocument(String.format(url, pageNumber));
-            vacanciesUrl = htmlParser.getVacanciesUrl(vacanciesPage);
-            if (vacanciesUrl.size() == 0) {
+            vacancies = htmlParser.getVacancies(vacanciesPage);
+            if (vacancies.size() == 0) {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -43,6 +45,6 @@ public class SkillsAggregatorV2 extends AbstractSkillsAggregator {
                 break;
             }
         }
-        return vacanciesUrl;
+        return vacancies;
     }
 }

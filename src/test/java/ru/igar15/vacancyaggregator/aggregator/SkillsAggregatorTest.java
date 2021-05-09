@@ -26,7 +26,7 @@ class SkillsAggregatorTest {
 
     @Autowired
     @InjectMocks
-    private SkillsAggregator aggregator;
+    private SkillsAggregatorV1 aggregator;
 
     @Mock
     private HtmlDocumentCreator htmlDocumentCreator;
