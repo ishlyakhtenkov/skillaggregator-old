@@ -33,7 +33,7 @@ public class SkillsReportService {
                 try {
                     repository.save(report.get());
                 } catch (Exception e) {
-                    return report;
+                    return repository.findByNameAndCityAndDateAndSelection(name.toUpperCase(), city.toUpperCase(), LocalDate.now(), selection);
                 }
             }
         }

@@ -21,7 +21,12 @@ public class SkillsAggregatorV2 extends AbstractSkillsAggregator {
             if (vacanciesUrl.size() == 0) {
                 break;
             }
+            int vacancyUrlCounter = 0;
             for (String vacancyUrl : vacanciesUrl) {
+                vacancyUrlCounter++;
+                if (vacancyUrlCounter > 50) {
+                    break;
+                }
                 getVacancyKeySkills(vacancyUrl, isVacancyPropertiesExist, vacancyProperties, keySkills, vacanciesAmount);
             }
         }
