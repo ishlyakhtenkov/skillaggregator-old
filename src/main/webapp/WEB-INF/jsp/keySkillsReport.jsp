@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div class="jumbotron pt-4">
         <div class="container">
             <jsp:useBean id="report" type="ru.igar15.vacancyaggregator.to.SkillsReportTo" scope="request"/>
