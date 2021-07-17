@@ -32,7 +32,7 @@ class SkillsReportMapSortUtilTest {
     void getToWhenEmptyKeySkills() {
         SkillsReport report = SkillsReportTestData.getNew();
         report.setId(100000);
-        report.setKeySkills("");
+        report.setSkills("");
         SkillsReportTo reportTo = SkillsReportUtil.getTo(report);
         SkillsReportTo expectedReportTo = new SkillsReportTo(100000, "NAME",
                 "CITY", LocalDate.now(), 2, 100, new LinkedHashMap<>());
@@ -43,7 +43,7 @@ class SkillsReportMapSortUtilTest {
     void getToWhenDelimiterNotExist() {
         SkillsReport report = SkillsReportTestData.getNew();
         report.setId(100000);
-        report.setKeySkills("JAVA=100 %\nSpring=50 %");
+        report.setSkills("JAVA=100 %\nSpring=50 %");
         SkillsReportTo reportTo = SkillsReportUtil.getTo(report);
         SkillsReportTo expectedReportTo = new SkillsReportTo(100000, "NAME",
                 "CITY", LocalDate.now(), 2, 100, new LinkedHashMap<>());
@@ -63,7 +63,7 @@ class SkillsReportMapSortUtilTest {
     void getWhenVacanciesAmountZero() {
         SkillsReport expectedReport = SkillsReportTestData.getNew();
         expectedReport.setVacanciesAmount(0);
-        expectedReport.setKeySkills("");
+        expectedReport.setSkills("");
         Map<String, Integer> keySkills = Map.of("JAVA", 100, "SPRING FRAMEWORK", 49,
                 "GIT", 40, "POSTGRESQL", 31);
 
@@ -75,7 +75,7 @@ class SkillsReportMapSortUtilTest {
     void getWhenKeySkillsEmpty() {
         SkillsReport expectedReport = SkillsReportTestData.getNew();
         expectedReport.setVacanciesAmount(100);
-        expectedReport.setKeySkills("");
+        expectedReport.setSkills("");
         Map<String, Integer> keySkills = new HashMap<>();
 
         SkillsReport report = SkillsReportUtil.get("NAME", "CITY", 2, 100, keySkills);

@@ -7,7 +7,7 @@ import org.jsoup.select.Elements;
 import java.util.List;
 
 
-public interface SkillsHtmlParser {
+public interface SkillsParser {
 
     Elements getVacancies(Document vacanciesPage);
 
@@ -15,5 +15,5 @@ public interface SkillsHtmlParser {
 
     List<String> getVacanciesUrl(Document vacanciesPage);
 
-    Elements getVacancyKeySkills(Document vacancyPage);
+    Elements getVacancySkills(Document vacancyPage);
 }

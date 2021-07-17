@@ -6,26 +6,26 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vacancy_key_skills_reports")
+@Table(name = "skills_reports")
 public class SkillsReport extends Report {
 
     @Column(name = "vacancies_amount")
     private int vacanciesAmount;
 
-    @Column(name = "key_skills")
-    private String keySkills;
+    @Column(name = "skills")
+    private String skills;
 
     public SkillsReport() {
     }
 
-    public SkillsReport(String name, String city, int selection, int vacanciesAmount, String keySkills) {
-        this(null, name, city, LocalDate.now(), selection, vacanciesAmount, keySkills);
+    public SkillsReport(String name, String city, int selection, int vacanciesAmount, String skills) {
+        this(null, name, city, LocalDate.now(), selection, vacanciesAmount, skills);
     }
 
-    public SkillsReport(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, String keySkills) {
+    public SkillsReport(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, String skills) {
         super(id, name, city, date, selection);
         this.vacanciesAmount = vacanciesAmount;
-        this.keySkills = keySkills;
+        this.skills = skills;
     }
 
     public int getVacanciesAmount() {
@@ -36,11 +36,11 @@ public class SkillsReport extends Report {
         this.vacanciesAmount = vacanciesAmount;
     }
 
-    public String getKeySkills() {
-        return keySkills;
+    public String getSkills() {
+        return skills;
     }
 
-    public void setKeySkills(String keySkills) {
-        this.keySkills = keySkills;
+    public void setSkills(String keySkills) {
+        this.skills = keySkills;
     }
 }

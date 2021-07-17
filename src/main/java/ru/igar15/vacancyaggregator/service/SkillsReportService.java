@@ -2,6 +2,7 @@ package ru.igar15.vacancyaggregator.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.igar15.vacancyaggregator.aggregator.Aggregator;
@@ -32,7 +33,7 @@ public class SkillsReportService {
             if (report.isPresent()) {
                 try {
                     repository.save(report.get());
-                } catch (Exception e) {
+                } catch (DataAccessException e) {
                     return repository.findByNameAndCityAndDateAndSelection(name.toUpperCase(), city.toUpperCase(), LocalDate.now(), selection);
                 }
             }

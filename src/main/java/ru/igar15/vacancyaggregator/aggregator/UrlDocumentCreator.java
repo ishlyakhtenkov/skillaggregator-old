@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class UrlHtmlDocumentCreator implements HtmlDocumentCreator{
+public class UrlDocumentCreator implements DocumentCreator {
 
     @Override
     public Document getDocument(String url) throws IOException {

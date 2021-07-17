@@ -11,16 +11,16 @@ public class SkillsReportTo {
     private LocalDate date;
     private int selection;
     private int vacanciesAmount;
-    private Map<String, String> keySkills;
+    private Map<String, String> skills;
 
-    public SkillsReportTo(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, Map<String, String> keySkills) {
+    public SkillsReportTo(Integer id, String name, String city, LocalDate date, int selection, int vacanciesAmount, Map<String, String> skills) {
         this.id = id;
         this.name = name;
         this.city = city;
         this.date = date;
         this.selection = selection;
         this.vacanciesAmount = vacanciesAmount;
-        this.keySkills = keySkills;
+        this.skills = skills;
     }
 
     public Integer getId() {
@@ -47,8 +47,8 @@ public class SkillsReportTo {
         return vacanciesAmount;
     }
 
-    public Map<String, String> getKeySkills() {
-        return keySkills;
+    public Map<String, String> getSkills() {
+        return skills;
     }
 
     @Override
@@ -62,11 +62,11 @@ public class SkillsReportTo {
                 Objects.equals(name, that.name) &&
                 Objects.equals(city, that.city) &&
                 Objects.equals(date, that.date) &&
-                Objects.equals(keySkills, that.keySkills);
+                Objects.equals(skills, that.skills);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, city, date, selection, vacanciesAmount, keySkills);
+        return Objects.hash(id, name, city, date, selection, vacanciesAmount, skills);
     }
 }

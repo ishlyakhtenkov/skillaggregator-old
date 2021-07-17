@@ -19,10 +19,10 @@
         </div>
 
         <div class="container">
-            <c:if test="${report.keySkills.size() == 0}">
+            <c:if test="${report.skills.size() == 0}">
                 <h3 class="text-danger" align="center">Processed vacancies do not have key skills</h3>
             </c:if>
-            <c:if test="${report.keySkills.size() > 0}">
+            <c:if test="${report.skills.size() > 0}">
                 <h3 align="center">Key Skills</h3>
                 <table class="table table-striped">
                     <thead>
@@ -32,7 +32,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${report.keySkills}" var="entry">
+                    <c:forEach items="${report.skills}" var="entry">
                         <tr align="center">
                             <td>${entry.key}</td>
                             <td>${entry.value}</td>

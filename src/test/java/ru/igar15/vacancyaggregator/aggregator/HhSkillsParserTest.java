@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HhSkillsHtmlParserTest {
+class HhSkillsParserTest {
     private final Document vacanciesPage = Jsoup.parse(new File("src/test/resources/first.html"), "UTF-8");
 
-    private final SkillsHtmlParser htmlParser = new HhSkillsHtmlParser();
+    private final SkillsParser htmlParser = new HhSkillsParser();
 
-    HhSkillsHtmlParserTest() throws IOException {
+    HhSkillsParserTest() throws IOException {
     }
 
     @Test
@@ -36,7 +36,7 @@ class HhSkillsHtmlParserTest {
     @Test
     void getVacancyKeySkills() throws IOException {
         Document vacancyPage = Jsoup.parse(new File("src/test/resources/html/43570368.html"), "UTF-8");
-        Elements vacancyKeySkills = htmlParser.getVacancyKeySkills(vacancyPage);
+        Elements vacancyKeySkills = htmlParser.getVacancySkills(vacancyPage);
         String keySkills = vacancyKeySkills.stream().map(Element::text).collect(Collectors.joining(", "));
         String expectedKeySkills = "Английский — B2 — Средне-продвинутый, Spring Framework, SQL, Linux, Java, Английский язык";
         assertEquals(expectedKeySkills, keySkills);

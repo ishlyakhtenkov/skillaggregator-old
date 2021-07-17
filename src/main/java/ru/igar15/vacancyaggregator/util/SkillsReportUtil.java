@@ -15,30 +15,30 @@ public class SkillsReportUtil {
     }
 
     public static SkillsReportTo getTo(SkillsReport report) {
-        String keySkills = report.getKeySkills();
-        Map<String, String> keySkillsMap = new LinkedHashMap<>();
-        if (!keySkills.isBlank()) {
-            String[] split = keySkills.split("\n");
-            for (String temp : split) {
-                if (temp.contains(DELIMITER)) {
-                    String[] tempSplit = temp.split(DELIMITER);
-                    keySkillsMap.put(tempSplit[0], tempSplit[1]);
+        String skills = report.getSkills();
+        Map<String, String> skillsMap = new LinkedHashMap<>();
+        if (!skills.isBlank()) {
+            String[] splitSkills = skills.split("\n");
+            for (String skill : splitSkills) {
+                if (skill.contains(DELIMITER)) {
+                    String[] splitSkill = skill.split(DELIMITER);
+                    skillsMap.put(splitSkill[0], splitSkill[1]);
                 }
             }
         }
-        return new SkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), keySkillsMap);
+        return new SkillsReportTo(report.getId(), report.getName(), report.getCity(), report.getDate(), report.getSelection(), report.getVacanciesAmount(), skillsMap);
     }
 
-    public static SkillsReport get(String name, String city, int selection, int vacanciesAmount, Map<String, Integer> keySkills) {
-        StringBuilder builder = new StringBuilder();
-        if (vacanciesAmount > 0 && keySkills.size() > 0) {
-            MapSortUtil.sortMapByValue(keySkills, Comparator.reverseOrder()).forEach((k, v) -> {
+    public static SkillsReport get(String name, String city, int selection, int vacanciesAmount, Map<String, Integer> skillsMap) {
+        StringBuilder skillsBuilder = new StringBuilder();
+        if (vacanciesAmount > 0 && skillsMap.size() > 0) {
+            MapSortUtil.sortMapByValue(skillsMap, Comparator.reverseOrder()).forEach((k, v) -> {
                 long percent = Math.round((double) v / vacanciesAmount * 100);
                 if (percent >= 100) {
                     percent = 100;
                 }
                 if (percent > 0) {
-                    builder.append(k)
+                    skillsBuilder.append(k)
                             .append(DELIMITER)
                             .append(percent)
                             .append(" %")
@@ -46,7 +46,7 @@ public class SkillsReportUtil {
                 }
             });
         }
-        String formattedKeySkills = builder.toString().trim();
-        return new SkillsReport(name, city, selection, vacanciesAmount, formattedKeySkills);
+        String skills = skillsBuilder.toString().trim();
+        return new SkillsReport(name, city, selection, vacanciesAmount, skills);
     }
 }

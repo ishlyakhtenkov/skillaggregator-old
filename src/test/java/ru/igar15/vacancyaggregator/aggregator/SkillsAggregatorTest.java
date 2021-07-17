@@ -29,7 +29,7 @@ class SkillsAggregatorTest {
     private SkillsAggregatorV1 aggregator;
 
     @Mock
-    private HtmlDocumentCreator htmlDocumentCreator;
+    private DocumentCreator documentCreator;
 
     @Test
     void getReport() throws IOException {
@@ -40,14 +40,14 @@ class SkillsAggregatorTest {
 
     @Test
     void getReportWhenVacanciesNotFound() throws IOException {
-        Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=zzzzz+moscow&search_field=name&page=0"))
+        Mockito.when(documentCreator.getDocument("https://hh.ru/search/vacancy?text=zzzzz+moscow&search_field=name&page=0"))
                 .thenReturn(Jsoup.parse(new File("src/test/resources/notfound.html"), "UTF-8"));
         Optional<SkillsReport> report = aggregator.getReport("zzzzz", "moscow", 1);
         assertFalse(report.isPresent());
     }
 
     private void setupMockHtmlDocumentCreator() throws IOException {
-        Mockito.when(htmlDocumentCreator.getDocument("https://hh.ru/search/vacancy?text=java+moscow&search_field=name&page=0"))
+        Mockito.when(documentCreator.getDocument("https://hh.ru/search/vacancy?text=java+moscow&search_field=name&page=0"))
                 .thenReturn(Jsoup.parse(new File("src/test/resources/first.html"), "UTF-8"));
         String urlRegex = "https://hh.ru/vacancy/%s";
         String fileRegex = "src/test/resources/html/%s.html";
@@ -55,7 +55,7 @@ class SkillsAggregatorTest {
         String[] fileNames = file.list();
         for (String fileName : fileNames) {
             fileName = fileName.replaceAll("\\.html", "");
-            Mockito.when(htmlDocumentCreator.getDocument(String.format(urlRegex, fileName)))
+            Mockito.when(documentCreator.getDocument(String.format(urlRegex, fileName)))
                     .thenReturn(Jsoup.parse(new File(String.format(fileRegex, fileName)), "UTF-8"));
         }
     }

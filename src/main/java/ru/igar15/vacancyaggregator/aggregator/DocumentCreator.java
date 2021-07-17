@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-public interface HtmlDocumentCreator {
+public interface DocumentCreator {
 
     Document getDocument(String docAddress) throws IOException;
 }

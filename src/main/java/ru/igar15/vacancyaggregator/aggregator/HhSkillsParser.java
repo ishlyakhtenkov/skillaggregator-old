@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class HhSkillsHtmlParser implements SkillsHtmlParser {
+public class HhSkillsParser implements SkillsParser {
     private static final String HH_RU_VACANCY_URL_SAMPLE = "https://hh.ru/vacancy/%s";
 
     @Override
@@ -36,7 +36,7 @@ public class HhSkillsHtmlParser implements SkillsHtmlParser {
     }
 
     @Override
-    public Elements getVacancyKeySkills(Document vacancyPage) {
+    public Elements getVacancySkills(Document vacancyPage) {
         return vacancyPage.getElementsByAttributeValue("data-qa", "bloko-tag__text");
     }
 

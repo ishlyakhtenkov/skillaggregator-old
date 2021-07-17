@@ -13,9 +13,9 @@ import java.util.Properties;
 public class SkillsAggregatorV1 extends AbstractSkillsAggregator {
 
     @Override
-    public void getAllVacanciesKeySkills(String hhRuUrl, int selection, boolean isVacancyPropertiesExist,
-                                         Properties vacancyProperties, Map<String, Integer> keySkills,
-                                         int[] vacanciesAmount) throws IOException {
+    public void getAllVacanciesSkills(String hhRuUrl, int selection, boolean isVacancyPropertiesExist,
+                                      Properties vacancyProperties, Map<String, Integer> skillsMap,
+                                      int[] vacanciesAmount) throws IOException {
         Elements vacancies = null;
         for (int i = 0; i < selection; i++) {
             vacancies = getVacancies(hhRuUrl, i);
@@ -24,7 +24,7 @@ public class SkillsAggregatorV1 extends AbstractSkillsAggregator {
             }
             for (Element vacancy : vacancies) {
                 String vacancyUrl = htmlParser.getVacancyUrl(vacancy);
-                getVacancyKeySkills(vacancyUrl, isVacancyPropertiesExist, vacancyProperties, keySkills, vacanciesAmount);
+                getVacancySkills(vacancyUrl, isVacancyPropertiesExist, vacancyProperties, skillsMap, vacanciesAmount);
             }
         }
     }
@@ -33,7 +33,7 @@ public class SkillsAggregatorV1 extends AbstractSkillsAggregator {
         Document vacanciesPage = null;
         Elements vacancies = null;
         for (int i = 0; i < 10; i++) {
-            vacanciesPage = htmlDocumentCreator.getDocument(String.format(url, pageNumber));
+            vacanciesPage = documentCreator.getDocument(String.format(url, pageNumber));
             vacancies = htmlParser.getVacancies(vacanciesPage);
             if (vacancies.size() == 0) {
                 try {
