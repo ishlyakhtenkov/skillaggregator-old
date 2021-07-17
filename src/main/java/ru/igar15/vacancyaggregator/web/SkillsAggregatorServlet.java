@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-public class SkillsServlet extends HttpServlet {
+public class SkillsAggregatorServlet extends HttpServlet {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private SkillsReportService service;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         AnnotationConfigApplicationContext context =
                 (AnnotationConfigApplicationContext) getServletContext().getAttribute("appContext");
         service = context.getBean(SkillsReportService.class);
@@ -30,7 +30,23 @@ public class SkillsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String city = req.getParameter("city");
-        int selection = 0;
+        int selection = getSelection(req);
+        log.info("get report for vacancy={}, city={}, selection={}", name, city, selection);
+        if (name.isBlank()) {
+            req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
+        } else {
+            Optional<SkillsReport> report = service.getReportToday(name, city, selection);
+            if (report.isPresent()) {
+                req.setAttribute("report", SkillsReportUtil.getTo(report.get()));
+                req.getRequestDispatcher("WEB-INF/jsp/skillsReport.jsp").forward(req, resp);
+            } else {
+                req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
+            }
+        }
+    }
+
+    private int getSelection(HttpServletRequest req) {
+        int selection;
         try {
             selection = Integer.parseInt(req.getParameter("selection"));
         } catch (NumberFormatException e) {
@@ -39,17 +55,6 @@ public class SkillsServlet extends HttpServlet {
         if (selection != 2 && selection != 10 && selection != 40) {
             selection = 2;
         }
-        log.info("get report for vacancy={}, city={}, selection={}", name, city, selection);
-        if (name.isBlank()) {
-            req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
-        } else {
-            Optional<SkillsReport> report = service.getReportToday(name, city, selection);
-            if (report.isPresent()) {
-                req.setAttribute("report", SkillsReportUtil.getTo(report.get()));
-                req.getRequestDispatcher("WEB-INF/jsp/keySkillsReport.jsp").forward(req, resp);
-            } else {
-                req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
-            }
-        }
+        return selection;
     }
 }

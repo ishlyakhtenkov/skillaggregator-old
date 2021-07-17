@@ -12,7 +12,7 @@
 
     <servlet>
         <servlet-name>keySkillsServlet</servlet-name>
-        <servlet-class>ru.igar15.vacancyaggregator.web.SkillsServlet</servlet-class>
+        <servlet-class>ru.igar15.vacancyaggregator.web.SkillsAggregatorServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
