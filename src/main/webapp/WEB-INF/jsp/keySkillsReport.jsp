@@ -22,7 +22,7 @@
             <h3 class="text-danger" align="center">Processed vacancies do not have key skills</h3>
         </c:if>
         <c:if test="${report.keySkills.size() > 0}">
-            <h3 align="center">Key skills</h3>
+            <h3 align="center">Key Skills</h3>
             <table class="table table-striped">
                 <thead>
                 <tr align="center">

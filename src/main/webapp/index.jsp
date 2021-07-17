@@ -4,45 +4,41 @@
 <body class="d-flex flex-column min-vh-100">
     <div class="jumbotron">
         <div class="container">
-            <h2>Good day!</h2>
-            <h3>It is an aggregator of key job skills!</h3>
-            <h3>Please input profession name and city (city is optional), where you want to find!</h3>
-            <h3>It will show you which skills are most in demand for the selected profession!</h3>
-            <h3>It takes information from <a href="https://hh.ru">Head hunters Russia</a>, so if you want to find with city,</h3>
-            <h3>enter its name in Russian.</h3>
-            <h3>It may take time! So wait a little bit.</h3>
+            <p class="h3 p-2 bg-secondary text-white text-center">&nbsp;&nbsp;&nbsp;&nbsp;Here you can find out what key skills you need to have for the specified profession.</br>
+                The query result will contain a list of key skills and the percentage of vacancies that require their knowledge.
+            </p>
+            <p class="h4 mb-3 mt-4">
+                &nbsp;&nbsp;&nbsp;&nbsp;For information on key skills, follow these steps*:
+            </p>
+            <h5>&nbsp;&nbsp;&nbsp;&nbsp;1. Enter the name of the profession you are interested in.</h5>
+            <h5>&nbsp;&nbsp;&nbsp;&nbsp;2. Enter the name of the city in which to search for vacancies**.</h5>
+            <h5>&nbsp;&nbsp;&nbsp;&nbsp;3. Select the number of vacancies for analysis (the waiting time depends significantly on this parameter).</h5>
+            <h5>&nbsp;&nbsp;&nbsp;&nbsp;4. Click the "Request" button and wait for the result.</h5>
+            <p class="font-italic mt-3">
+                &nbsp;&nbsp;&nbsp;&nbsp;* Please note that vacancies are taken from the <a href="https://hh.ru">Head Hunters Russia</a> portal, so (if possible) enter the name of the profession and city in Russian:
+                </br>
+                &nbsp;&nbsp;&nbsp;&nbsp;** If you do not specify a city, the search will be performed in all cities of Russia.
+            </p>
         </div>
     </div>
 
-    <div class="container">
-        <form method="get" action="keySkills">
+    <div class="container d-flex justify-content-center">
+        <form class="text-center" method="get" action="keySkills">
             <div class="form-group">
                 <label for="name" class="col-form-label">Profession name:</label>
-                <div class="row">
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                </div>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="city" class="col-form-label">Vacancy city:</label>
-                <div class="row">
-                    <div class="col-3">
-                        <input type="text" class="form-control" id="city" name="city">
-                    </div>
-                </div>
+                <input type="text" class="form-control" id="city" name="city">
             </div>
             <div class="form-group">
                 <label for="selection" class="col-form-label">Selection:</label>
-                <div class="row">
-                    <div class="col-3">
-                        <select name="selection" class="form-control" id="selection">
-                            <option value="2" selected>First 100 (~ 25 sec wait)</option>
-                            <option value="10">First 500 (~ 2 min wait)</option>
-                            <option value="40">First 2000 (~ 8 min wait)</option>
-                        </select>
-                    </div>
-                </div>
+                <select name="selection" class="form-control" id="selection">
+                    <option value="2" selected>First 100 (~ 25 sec wait)</option>
+                    <option value="10">First 500 (~ 2 min wait)</option>
+                    <option value="40">First 2000 (~ 8 min wait)</option>
+                </select>
             </div>
             <button class="btn btn-primary" type="submit">Request</button>
         </form>
