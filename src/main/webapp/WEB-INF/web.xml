@@ -7,12 +7,12 @@
     <display-name>Skills Aggregator</display-name>
 
     <listener>
-        <listener-class>ru.igar15.vacancyaggregator.config.AppServletContextListener</listener-class>
+        <listener-class>ru.igar15.skillsaggregator.config.AppServletContextListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>keySkillsServlet</servlet-name>
-        <servlet-class>ru.igar15.vacancyaggregator.web.SkillsAggregatorServlet</servlet-class>
+        <servlet-class>ru.igar15.skillsaggregator.web.SkillsAggregatorServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>

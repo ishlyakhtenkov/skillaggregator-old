@@ -6,15 +6,15 @@
     <body class="d-flex flex-column min-vh-100">
         <div class="jumbotron pt-4">
             <div class="container">
-                <jsp:useBean id="report" type="ru.igar15.vacancyaggregator.to.SkillsReportTo" scope="request"/>
+                <jsp:useBean id="report" type="ru.igar15.skillsaggregator.to.SkillsReportTo" scope="request"/>
                 <h5><a href="${pageContext.request.contextPath}">Home</a></h5>
                 <hr>
                 <br>
-                <h4>Profession name: ${report.name}</h4>
+                <h4>Profession name: ${report.professionName}</h4>
                 <h4>City: ${report.city}</h4>
                 <h4>Selection: First ${report.selection * 50} vacancies</h4>
                 <h4>Processed date: ${report.date}</h4>
-                <h4>Number of processed vacancies: ${report.vacanciesAmount}</h4>
+                <h4>Number of processed vacancies: ${report.analyzedVacanciesAmount}</h4>
             </div>
         </div>
 

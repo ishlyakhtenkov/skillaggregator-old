@@ -21,7 +21,7 @@
         <appender-ref ref="result"/>
     </logger>
 
-    <logger name="ru.igar15.vacancyaggregator" level="debug"/>
+    <logger name="ru.igar15.skillsaggregator" level="debug"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>

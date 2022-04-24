@@ -22,7 +22,7 @@
         </encoder>
     </appender>
 
-    <logger name="ru.igar15.vacancyaggregator" level="debug"/>
+    <logger name="ru.igar15.skillsaggregator" level="debug"/>
 
     <root level="info">
         <appender-ref ref="file"/>
