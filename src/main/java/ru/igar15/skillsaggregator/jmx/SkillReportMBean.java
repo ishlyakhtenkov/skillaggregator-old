@@ -7,38 +7,38 @@ import org.springframework.jmx.export.annotation.ManagedOperationParameters;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 import ru.igar15.skillsaggregator.model.Selection;
-import ru.igar15.skillsaggregator.service.SkillsReportService;
+import ru.igar15.skillsaggregator.service.SkillReportService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@ManagedResource(description = "Skills Report Manage Bean")
-public class SkillsReportMBean {
-
+@ManagedResource(description = "Skill Report Manage Bean")
+public class SkillReportMBean {
     @Autowired
-    private SkillsReportService service;
+    private SkillReportService service;
 
-    @ManagedOperation(description = "Get all skills reports for today")
-    public List<String> getAllReportsToday() {
-        return service.getAllReportsToday().stream()
-                .map(report -> report.getProfessionName() + ", " + report.getCity() + ", " + report.getSelection())
+    @ManagedOperation(description = "Get all skill reports for today")
+    public List<String> getAllSkillReportsForToday() {
+        return service.getAllSkillReportsForToday().stream()
+                .map(skillReport -> String.join(", ", skillReport.getProfessionName(), skillReport.getCity(),
+                        skillReport.getSelection().toString()))
                 .collect(Collectors.toList());
     }
 
-    @ManagedOperation(description = "Delete all skills reports for today")
-    public void deleteAllReportsToday() {
-        service.deleteAllReportsToday();
+    @ManagedOperation(description = "Delete all skill reports for today")
+    public void deleteAllSkillReportsForToday() {
+        service.deleteAllSkillReportsForToday();
     }
 
-    @ManagedOperation(description = "Delete skills report for today")
+    @ManagedOperation(description = "Delete skill report for today")
     @ManagedOperationParameters({
             @ManagedOperationParameter(name = "professionName", description = "Profession name"),
             @ManagedOperationParameter(name = "city", description = "City"),
             @ManagedOperationParameter(name = "selection", description = "Selection (FIRST_100_VACANCIES, " +
                                                                          "FIRST_500_VACANCIES or FIRST_2000_VACANCIES)")
     })
-    public void deleteReportToday(String name, String city, String selection) {
-        service.deleteReportToday(name, city, Selection.valueOf(selection));
+    public void deleteSkillReportForToday(String name, String city, String selection) {
+        service.deleteSkillReportForToday(name, city, Selection.valueOf(selection));
     }
 }

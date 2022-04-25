@@ -10,4 +10,8 @@ public enum Selection {
     Selection(int vacanciesAmount) {
         this.vacanciesAmount = vacanciesAmount;
     }
+
+    public int getVacanciesAmount() {
+        return vacanciesAmount;
+    }
 }

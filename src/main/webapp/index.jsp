@@ -24,10 +24,10 @@
         </div>
 
         <div class="container d-flex justify-content-center">
-            <form class="text-center" method="get" action="keySkills">
+            <form class="text-center" method="get" action="skillReport">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Profession name:</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="professionName" required>
                 </div>
                 <div class="form-group">
                     <label for="city" class="col-form-label">Vacancy city:</label>
@@ -36,12 +36,12 @@
                 <div class="form-group">
                     <label for="selection" class="col-form-label">Selection:</label>
                     <select name="selection" class="form-control" id="selection">
-                        <option value="2" selected>First 100 (~ 25 sec wait)</option>
-                        <option value="10">First 500 (~ 2 min wait)</option>
-                        <option value="40">First 2000 (~ 8 min wait)</option>
+                        <option value="FIRST_100_VACANCIES" selected>First 100 (~ 25 sec wait)</option>
+                        <option value="FIRST_500_VACANCIES">First 500 (~ 2 min wait)</option>
+                        <option value="FIRST_2000_VACANCIES">First 2000 (~ 8 min wait)</option>
                     </select>
                 </div>
-                <button class="btn btn-primary" type="submit">Request</button>
+                <button class="btn btn-primary" type="submit">Get Skill Report</button>
             </form>
         </div>
         <br>

@@ -7,7 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -23,6 +26,8 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "ru.igar15.skillsaggregator.repository")
 public class AppConfig {
+    private static final String HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
+    private static final String HIBERNATE_USE_SQl_COMMENTS = "hibernate.use_sql_comments";
     @Autowired
     private Environment environment;
 
@@ -37,6 +42,19 @@ public class AppConfig {
     }
 
     @Bean
+    public DataSourceInitializer dataSourceInitializer() {
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+        resourceDatabasePopulator.setSqlScriptEncoding("UTF-8");
+        resourceDatabasePopulator.addScript(new ClassPathResource(environment.getProperty("jdbc.initLocation")));
+
+        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+        dataSourceInitializer.setDataSource(dataSource());
+        dataSourceInitializer.setEnabled(Boolean.valueOf(environment.getProperty("database.init")));
+        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+        return dataSourceInitializer;
+    }
+
+    @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(Boolean.valueOf(environment.getProperty("jpa.showSql")));
@@ -47,11 +65,18 @@ public class AppConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource());
-        localContainerEntityManagerFactoryBean.setPackagesToScan("ru.igar15.vacancyaggregator.model");
+        localContainerEntityManagerFactoryBean.setPackagesToScan("ru.igar15.skillsaggregator.model");
         localContainerEntityManagerFactoryBean.setJpaProperties(getHibernateProperties());
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
         localContainerEntityManagerFactoryBean.afterPropertiesSet();
         return localContainerEntityManagerFactoryBean;
+    }
+
+    private Properties getHibernateProperties() {
+        Properties properties = new Properties();
+        properties.setProperty(HIBERNATE_FORMAT_SQL, environment.getProperty(HIBERNATE_FORMAT_SQL));
+        properties.setProperty(HIBERNATE_USE_SQl_COMMENTS, environment.getProperty(HIBERNATE_USE_SQl_COMMENTS));
+        return properties;
     }
 
     @Bean
@@ -59,12 +84,5 @@ public class AppConfig {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return jpaTransactionManager;
-    }
-
-    private Properties getHibernateProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
-        properties.setProperty("hibernate.use_sql_comments", environment.getProperty("hibernate.use_sql_comments"));
-        return properties;
     }
 }

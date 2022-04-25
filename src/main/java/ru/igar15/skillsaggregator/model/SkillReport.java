@@ -1,18 +1,20 @@
 package ru.igar15.skillsaggregator.model;
 
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Map;
 
 import static ru.igar15.skillsaggregator.model.Selection.FIRST_100_VACANCIES;
 
 @Entity
-@Table(name = "skills_reports", uniqueConstraints = {@UniqueConstraint(columnNames = {"profession_name", "city", "date",
-        "selection"}, name = "skills_reports_unique_profession_name_city_date_selection_idx")})
+@Table(name = "skill_reports", uniqueConstraints = {@UniqueConstraint(columnNames = {"profession_name", "city", "date",
+        "selection"}, name = "skill_reports_unique_profession_name_city_date_selection_idx")})
 @Access(AccessType.FIELD)
-public class SkillsReport implements Serializable {
+public class SkillReport implements Serializable {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -32,27 +34,34 @@ public class SkillsReport implements Serializable {
     @Column(name = "analyzed_vacancies_amount")
     private int analyzedVacanciesAmount;
 
-    @Column(name = "required_skills")
-    private String requiredSkills;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @BatchSize(size = 200)
+    @CollectionTable(name = "skills",
+            joinColumns = {@JoinColumn(name = "skill_report_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "skill_name")
+    @Column(name = "skill_counter")
+    private Map<String, Integer> skillCounter;
 
     @Column(name = "selection")
     @Enumerated(EnumType.STRING)
     private Selection selection = FIRST_100_VACANCIES;
 
-    public SkillsReport() {
+    public SkillReport() {
     }
 
-    public SkillsReport(String professionName, String city, int analyzedVacanciesAmount, String requiredSkills, Selection selection) {
-        this(null, professionName, city, LocalDate.now(), analyzedVacanciesAmount, requiredSkills, selection);
+    public SkillReport(String professionName, String city, int analyzedVacanciesAmount, Map<String, Integer> skillCounter,
+                       Selection selection) {
+        this(null, professionName, city, LocalDate.now(), analyzedVacanciesAmount, skillCounter, selection);
     }
 
-    public SkillsReport(Integer id, String professionName, String city, LocalDate date, int analyzedVacanciesAmount, String requiredSkills, Selection selection) {
+    public SkillReport(Integer id, String professionName, String city, LocalDate date, int analyzedVacanciesAmount,
+                       Map<String, Integer> skillCounter, Selection selection) {
         this.id = id;
         this.professionName = professionName;
         this.city = city;
         this.date = date;
         this.analyzedVacanciesAmount = analyzedVacanciesAmount;
-        this.requiredSkills = requiredSkills;
+        this.skillCounter = skillCounter;
         this.selection = selection;
     }
 
@@ -96,12 +105,12 @@ public class SkillsReport implements Serializable {
         this.analyzedVacanciesAmount = vacanciesAmount;
     }
 
-    public String getRequiredSkills() {
-        return requiredSkills;
+    public Map<String, Integer> getSkillCounter() {
+        return skillCounter;
     }
 
-    public void setRequiredSkills(String skills) {
-        this.requiredSkills = skills;
+    public void setSkillCounter(Map<String, Integer> skillCounter) {
+        this.skillCounter = skillCounter;
     }
 
     public Selection getSelection() {
@@ -120,7 +129,7 @@ public class SkillsReport implements Serializable {
         if (o == null || !getClass().equals(Hibernate.getClass(o))) {
             return false;
         }
-        SkillsReport that = (SkillsReport) o;
+        SkillReport that = (SkillReport) o;
         return id != null && id.equals(that.id);
     }
 

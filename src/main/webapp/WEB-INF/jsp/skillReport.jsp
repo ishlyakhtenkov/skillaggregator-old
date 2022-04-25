@@ -6,23 +6,23 @@
     <body class="d-flex flex-column min-vh-100">
         <div class="jumbotron pt-4">
             <div class="container">
-                <jsp:useBean id="report" type="ru.igar15.skillsaggregator.to.SkillsReportTo" scope="request"/>
+                <jsp:useBean id="skillReport" type="ru.igar15.skillsaggregator.model.SkillReport" scope="request"/>
                 <h5><a href="${pageContext.request.contextPath}">Home</a></h5>
                 <hr>
                 <br>
-                <h4>Profession name: ${report.professionName}</h4>
-                <h4>City: ${report.city}</h4>
-                <h4>Selection: First ${report.selection * 50} vacancies</h4>
-                <h4>Processed date: ${report.date}</h4>
-                <h4>Number of processed vacancies: ${report.analyzedVacanciesAmount}</h4>
+                <h4>Profession name: ${skillReport.professionName}</h4>
+                <h4>City: ${skillReport.city}</h4>
+                <h4>Selection: First ${skillReport.selection.vacanciesAmount} vacancies</h4>
+                <h4>Processed date: ${skillReport.date}</h4>
+                <h4>Analyzed vacancies amount: ${skillReport.analyzedVacanciesAmount}</h4>
             </div>
         </div>
 
         <div class="container">
-            <c:if test="${report.skills.size() == 0}">
-                <h3 class="text-danger" align="center">Processed vacancies do not have key skills</h3>
+            <c:if test="${skillReport.skillCounter.size() == 0}">
+                <h3 class="text-danger" align="center">Analyzed vacancies do not have key skills</h3>
             </c:if>
-            <c:if test="${report.skills.size() > 0}">
+            <c:if test="${skillReport.skillCounter.size() > 0}">
                 <h3 align="center">Key Skills</h3>
                 <table class="table table-striped">
                     <thead>
@@ -32,7 +32,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${report.skills}" var="entry">
+                    <c:forEach items="${skillReport.skillCounter}" var="entry">
                         <tr align="center">
                             <td>${entry.key}</td>
                             <td>${entry.value}</td>
