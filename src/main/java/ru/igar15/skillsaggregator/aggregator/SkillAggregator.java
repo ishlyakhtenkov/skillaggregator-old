@@ -22,7 +22,7 @@ public class SkillAggregator {
     private static final String TITLE = "title";
     private static final String HREF_ATTRIBUTE_KEY = "href";
     private static final String VACANCY_ID_ATTRIBUTE = "\"vacancyId\": ";
-    private static final String VACANCY_ID_PATTERN = "^[0-9][A-Za-z0-9]*$";
+    private static final String VACANCY_ID_PATTERN = "^[0-9].*";
     private static final String VACANCY_SKILL_ATTRIBUTE_VALUE = "bloko-tag__text";
     private static final String VACANCY_ID_LINE_SPLITTER = ",";
 
@@ -58,7 +58,7 @@ public class SkillAggregator {
     }
 
     private Set<String> getVacanciesUrls(Document vacanciesPage) {
-        String vacanciesPageContent = vacanciesPage.toString();
+        String vacanciesPageContent = vacanciesPage.text();
         return Arrays.stream(vacanciesPageContent.split(VACANCY_ID_ATTRIBUTE))
                 .filter(this::isValidVacancyIdLine)
                 .map(vacancyIdLine -> String.format(VACANCY_PAGE_URL_PATTERN, vacancyIdLine.split(VACANCY_ID_LINE_SPLITTER)[0]))

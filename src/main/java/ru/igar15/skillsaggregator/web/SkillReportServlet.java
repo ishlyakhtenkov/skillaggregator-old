@@ -6,6 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.igar15.skillsaggregator.model.Selection;
 import ru.igar15.skillsaggregator.model.SkillReport;
 import ru.igar15.skillsaggregator.service.SkillReportService;
+import ru.igar15.skillsaggregator.util.EmptySkillReportException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

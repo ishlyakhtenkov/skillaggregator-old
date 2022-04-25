@@ -8,10 +8,12 @@ import ru.igar15.skillsaggregator.aggregator.SkillAggregator;
 import ru.igar15.skillsaggregator.model.Selection;
 import ru.igar15.skillsaggregator.model.SkillReport;
 import ru.igar15.skillsaggregator.repository.SkillReportRepository;
+import ru.igar15.skillsaggregator.util.EmptySkillReportException;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SkillReportService {
@@ -20,22 +22,35 @@ public class SkillReportService {
     private SkillReportRepository repository;
 
     public SkillReport getSkillReportForToday(String professionName, String city, Selection selection) throws IOException {
+        checkParamsOnNull(professionName, city, selection);
+        professionName = professionName.toUpperCase();
+        city = city.toUpperCase();
+        Optional<SkillReport> optionalSkillReport =
+                repository.findByProfessionNameAndCityAndDateAndSelection(professionName, city, LocalDate.now(), selection);
+        if (optionalSkillReport.isPresent()) {
+            return optionalSkillReport.get();
+        } else {
+            return createSkillReport(professionName, city, selection);
+        }
+    }
+
+    private void checkParamsOnNull(String professionName, String city, Selection selection) {
         Assert.notNull(professionName, "professionName must not be null");
         Assert.notNull(city, "city must not be null");
         Assert.notNull(selection, "selection must not be null");
-        professionName = professionName.toUpperCase();
-        city = city.toUpperCase();
-        return repository.findByProfessionNameAndCityAndDateAndSelection(professionName, city,LocalDate.now(), selection)
-                .orElse(createSkillReport(professionName, city, selection));
     }
 
     private SkillReport createSkillReport(String professionName, String city, Selection selection) throws IOException {
         SkillAggregator skillAggregator = new SkillAggregator(professionName, city, selection);
         SkillReport skillReport = skillAggregator.makeSkillReport();
-        if (skillReport.getAnalyzedVacanciesAmount() > 0 && !skillReport.getSkillCounter().isEmpty()) {
-            saveSkillReport(skillReport);
+        checkSkillReport(skillReport);
+        return saveSkillReport(skillReport);
+    }
+
+    private void checkSkillReport(SkillReport skillReport) {
+        if (skillReport.getAnalyzedVacanciesAmount() == 0) {
+            throw new EmptySkillReportException("Skill report has 0 analyzed vacancies");
         }
-        return skillReport;
     }
 
     private SkillReport saveSkillReport(SkillReport skillReport) {
@@ -52,9 +67,7 @@ public class SkillReportService {
     }
 
     public void deleteSkillReportForToday(String professionName, String city, Selection selection) {
-        Assert.notNull(professionName, "professionName must not be null");
-        Assert.notNull(city, "city must not be null");
-        Assert.notNull(selection, "selection must not be null");
+        checkParamsOnNull(professionName, city, selection);
         repository.deleteByNameAndCityAndDateAndSelection(professionName.toUpperCase(), city.toUpperCase(),
                 LocalDate.now(), selection);
     }
