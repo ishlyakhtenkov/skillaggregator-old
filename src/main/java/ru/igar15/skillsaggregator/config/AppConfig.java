@@ -46,7 +46,6 @@ public class AppConfig {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.setSqlScriptEncoding("UTF-8");
         resourceDatabasePopulator.addScript(new ClassPathResource(environment.getProperty("jdbc.initLocation")));
-
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setEnabled(Boolean.valueOf(environment.getProperty("database.init")));

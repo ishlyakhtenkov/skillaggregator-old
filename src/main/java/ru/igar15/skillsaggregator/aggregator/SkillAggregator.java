@@ -11,16 +11,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static ru.igar15.skillsaggregator.aggregator.HtmlPageLoader.*;
+import static ru.igar15.skillsaggregator.aggregator.HtmlPageLoader.loadPage;
 
 public class SkillAggregator {
-    private static final String VACANCIES_PAGE_URL_PATTERN = "https://hh.ru/search/vacancy?text=%s+%s&search_field=name&page=%d";
+    static final String VACANCIES_PAGE_URL_PATTERN = "https://hh.ru/search/vacancy?text=%s+%s&search_field=name&page=%d";
     private static final int VACANCIES_AMOUNT_PER_PAGE = 50;
-    private static final String VACANCY_PAGE_URL_PATTERN = "https://hh.ru/vacancy/%s";
+    static final String VACANCY_PAGE_URL_PATTERN = "https://hh.ru/vacancy/%s";
     private static final String VACANCY_ATTRIBUTE_KEY = "data-qa";
-    private static final String VACANCY_TITLE_ATTRIBUTE_VALUE = "vacancy-serp__vacancy-title";
-    private static final String TITLE = "title";
-    private static final String HREF_ATTRIBUTE_KEY = "href";
     private static final String VACANCY_ID_ATTRIBUTE = "\"vacancyId\": ";
     private static final String VACANCY_ID_PATTERN = "^[0-9].*";
     private static final String VACANCY_SKILL_ATTRIBUTE_VALUE = "bloko-tag__text";
@@ -75,18 +72,4 @@ public class SkillAggregator {
                 .forEach(skill -> skillCounter.merge(skill, 1, Integer::sum));
         analyzedVacanciesAmount++;
     }
-
-
-//    public Elements getVacancies(Document vacanciesPage) {
-//        return vacanciesPage.getElementsByAttributeValue(VACANCY_ATTRIBUTE_KEY, VACANCY_TITLE_ATTRIBUTE_VALUE);
-//    }
-
-//    public String getVacancyUrl(Element vacancy) {
-//        return vacancy.getElementsByAttributeValueContaining(VACANCY_ATTRIBUTE_KEY, TITLE).attr(HREF_ATTRIBUTE_KEY);
-//    }
-
-
-
-
-
 }

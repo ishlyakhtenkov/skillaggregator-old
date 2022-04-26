@@ -6,13 +6,15 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.igar15.skillsaggregator.model.Selection;
 import ru.igar15.skillsaggregator.model.SkillReport;
 import ru.igar15.skillsaggregator.service.SkillReportService;
-import ru.igar15.skillsaggregator.util.EmptySkillReportException;
+import ru.igar15.skillsaggregator.util.SkillReportUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static ru.igar15.skillsaggregator.util.SkillReportUtil.createTo;
 
 public class SkillReportServlet extends HttpServlet {
     private static final String PROFESSION_NAME_PARAM = "professionName";
@@ -38,7 +40,7 @@ public class SkillReportServlet extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/jsp/noVacancies.jsp").forward(req, resp);
         } else {
             SkillReport skillReport = getSkillReport(professionName, city, selection);
-            req.setAttribute("skillReport", skillReport);
+            req.setAttribute("skillReportTo", createTo(skillReport));
             req.getRequestDispatcher("WEB-INF/jsp/skillReport.jsp").forward(req, resp);
         }
     }

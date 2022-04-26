@@ -1,44 +1,46 @@
 package ru.igar15.skillsaggregator.aggregator;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import ru.igar15.skillsaggregator.model.SkillReport;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.igar15.skillsaggregator.model.Selection.FIRST_100_VACANCIES;
+import static ru.igar15.skillsaggregator.testdata.SkillReportTestData.skillCounter;
 
 class SkillAggregatorTest {
-//    private final Document vacanciesPage = Jsoup.parse(new File("src/test/resources/first.html"), "UTF-8");
-//
-//    private final SkillAggregator htmlParser = new SkillAggregator();
-//
-//    SkillAggregatorTest() throws IOException {
-//    }
-//
-//    @Test
-//    void getVacancies() {
-//        Elements vacancies = htmlParser.getVacancies(vacanciesPage);
-//        assertEquals(50, vacancies.size());
-//    }
-//
-//    @Test
-//    void getVacancyUrl() {
-//        Elements vacancies = htmlParser.getVacancies(vacanciesPage);
-//        String vacancyUrl = htmlParser.getVacancyUrl(vacancies.get(2));
-//        assertEquals("https://hh.ru/vacancy/43112275", vacancyUrl);
-//    }
-//
-//    @Test
-//    void getVacancyKeySkills() throws IOException {
-//        Document vacancyPage = Jsoup.parse(new File("src/test/resources/html/43570368.html"), "UTF-8");
-//        Elements vacancyKeySkills = htmlParser.getVacancySkills(vacancyPage);
-//        String keySkills = vacancyKeySkills.stream().map(Element::text).collect(Collectors.joining(", "));
-//        String expectedKeySkills = "Английский — B2 — Средне-продвинутый, Spring Framework, SQL, Linux, Java, Английский язык";
-//        assertEquals(expectedKeySkills, keySkills);
-//    }
+
+    @Test
+    void someTest() throws IOException {
+        mockHtmlPageLoader();
+        SkillAggregator skillAggregator = new SkillAggregator("java", "moscow", FIRST_100_VACANCIES);
+        SkillReport skillReport = skillAggregator.makeSkillReport();
+        assertEquals("java", skillReport.getProfessionName());
+        assertEquals("moscow", skillReport.getCity());
+        assertEquals(100, skillReport.getAnalyzedVacanciesAmount());
+        assertEquals(skillCounter, skillReport.getSkillCounter());
+    }
+
+    private void mockHtmlPageLoader() throws IOException {
+        MockedStatic<HtmlPageLoader> mockedPageLoader = Mockito.mockStatic(HtmlPageLoader.class);
+        String vacanciesPage1Url = String.format(SkillAggregator.VACANCIES_PAGE_URL_PATTERN, "java", "moscow", 0);
+        String vacanciesPage2Url = String.format(SkillAggregator.VACANCIES_PAGE_URL_PATTERN, "java", "moscow", 1);
+        File vacanciesPageFile = new File("src/test/resources/html/vacancies_page.html");
+        mockedPageLoader.when(() -> HtmlPageLoader.loadPage(vacanciesPage1Url)).thenReturn(Jsoup.parse(vacanciesPageFile, "UTF-8"));
+        mockedPageLoader.when(() -> HtmlPageLoader.loadPage(vacanciesPage2Url)).thenReturn(Jsoup.parse(vacanciesPageFile, "UTF-8"));
+
+        String vacancyPagesDirectoryPath = "src/test/resources/html/vacancyPages/";
+        String[] vacancyPageFileNames = new File(vacancyPagesDirectoryPath).list();
+        for (String vacancyPageFileName : vacancyPageFileNames) {
+            String vacancyId = vacancyPageFileName.replace(".html", "");
+            String vacancyUrl = String.format(SkillAggregator.VACANCY_PAGE_URL_PATTERN, vacancyId);
+            File vacancyPageFile = new File(vacancyPagesDirectoryPath + vacancyPageFileName);
+            mockedPageLoader.when(() -> HtmlPageLoader.loadPage(vacancyUrl)).thenReturn(Jsoup.parse(vacancyPageFile, "UTF-8"));
+        }
+    }
 }

@@ -38,7 +38,7 @@
     </welcome-file-list>
 
     <error-page>
-        <exception-type>ru.igar15.skillsaggregator.util.EmptySkillReportException</exception-type>
+        <exception-type>ru.igar15.skillsaggregator.service.EmptySkillReportException</exception-type>
         <location>/WEB-INF/jsp/noVacancies.jsp</location>
     </error-page>
 

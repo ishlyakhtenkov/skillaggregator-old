@@ -1,4 +1,4 @@
-package ru.igar15.skillsaggregator.util;
+package ru.igar15.skillsaggregator.service;
 
 public class EmptySkillReportException extends RuntimeException {
     public EmptySkillReportException(String message) {

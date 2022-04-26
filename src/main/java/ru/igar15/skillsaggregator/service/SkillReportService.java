@@ -8,7 +8,6 @@ import ru.igar15.skillsaggregator.aggregator.SkillAggregator;
 import ru.igar15.skillsaggregator.model.Selection;
 import ru.igar15.skillsaggregator.model.SkillReport;
 import ru.igar15.skillsaggregator.repository.SkillReportRepository;
-import ru.igar15.skillsaggregator.util.EmptySkillReportException;
 
 import java.io.IOException;
 import java.time.LocalDate;
