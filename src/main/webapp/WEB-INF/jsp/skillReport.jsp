@@ -23,19 +23,19 @@
                 <h3 class="text-danger" align="center">Analyzed vacancies do not have key skills</h3>
             </c:if>
             <c:if test="${skillReportTo.skillStatistic.size() > 0}">
-                <h3 align="center">Key Skills</h3>
+                <h3 class="text-center">Key Skills</h3>
                 <table class="table table-striped">
                     <thead>
-                    <tr align="center">
-                        <th><h5>Technology</h5></th>
-                        <th><h5>Percentage of vacancies where required</h5></th>
+                    <tr>
+                        <th class="text-center align-middle"><h5>Technology</h5></th>
+                        <th class="text-center align-middle"><h5>Percentage of vacancies where required</h5></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${skillReportTo.skillStatistic}" var="entry">
-                        <tr align="center">
-                            <td>${entry.key}</td>
-                            <td>${entry.value} %</td>
+                        <tr>
+                            <td class="text-center align-middle">${entry.key}</td>
+                            <td class="text-center align-middle">${entry.value} %</td>
                         </tr>
                     </c:forEach>
                     </tbody>
